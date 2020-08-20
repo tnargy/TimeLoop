@@ -1,26 +1,28 @@
 ﻿using UnityEngine;
+    
 
 public class ThirdPersonMovement : MonoBehaviour
 {
-    public CharacterController controller;
-    Animator animator;
-    public Transform cam;
-
-    float moveSpeed;
-    float gravity = -9.81f;
-    public float jumpHeight = 3;
-    Vector3 velocity;
-    bool isGrounded;
-
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;    
+    public const float GRAVITY = -9.81f;
     
+    CharacterController controller;
+    Animator animator;
+
+    [SerializeField] Transform cam;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] float jumpHeight;
+    [SerializeField] float groundDistance;
+    [SerializeField] float turnSmoothTime;
+    [SerializeField] LayerMask groundMask;
+
+    bool isGrounded;
+    float moveSpeed;
     float turnSmoothVelocity;
-    public float turnSmoothTime = 0.1f;
+    Vector3 velocity;
 
     void Start()
     {
+        controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
     }
     
@@ -37,11 +39,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            velocity.y = Mathf.Sqrt(jumpHeight * -2 * GRAVITY);
         }
 
         // gravity
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += GRAVITY * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
         // walk
