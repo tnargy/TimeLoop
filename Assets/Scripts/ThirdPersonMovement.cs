@@ -8,12 +8,12 @@ public class ThirdPersonMovement : MonoBehaviour
     CharacterController controller;
     Animator animator;
 
-    [SerializeField] Transform cam;
-    [SerializeField] Transform groundCheck;
-    [SerializeField] float jumpHeight;
-    [SerializeField] float groundDistance;
-    [SerializeField] float turnSmoothTime;
-    [SerializeField] LayerMask groundMask;
+    public Transform cam;
+    public Transform groundCheck;
+    public float jumpHeight;
+    public float groundDistance;
+    public float turnSmoothTime;
+    public LayerMask groundMask;
 
     bool isGrounded;
     float moveSpeed;
