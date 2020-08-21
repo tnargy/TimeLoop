@@ -1832,7 +1832,7 @@ MonoBehaviour:
   rotateByWorld: 0
   useContinuousSprint: 1
   sprintOnlyFree: 1
-  locomotionType: 2
+  locomotionType: 0
   freeSpeed:
     movementSmooth: 6
     animationSmooth: 0.2

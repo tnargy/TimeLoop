@@ -6,6 +6,7 @@ public class MovingPlatform : MonoBehaviour
     GameObject player;
     Vector3 current_target;
     int waypointIndex;
+    bool playerOnPlatform;
 
     public Vector3[] waypoints;
     public bool automatic;
@@ -28,16 +29,26 @@ public class MovingPlatform : MonoBehaviour
     {
         if (transform.position != current_target)
         {
+            if (playerOnPlatform)
+            {
+                player.GetComponent<vThirdPersonController>().useRootMotion = true;
+            }
+            
             MovePlatform();
         }
         else
         {
+            if (playerOnPlatform)
+            {
+                player.GetComponent<vThirdPersonController>().useRootMotion = false;
+            }
             UpdateTarget();
         }
     }
 
     private void MovePlatform()
     {
+        
         Vector3 heading = current_target - transform.position;
         transform.position += (heading / heading.magnitude) * moveSpeed * Time.deltaTime;
         if (heading.magnitude < tolerance)
@@ -68,7 +79,7 @@ public class MovingPlatform : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.transform.parent = transform;
-            other.gameObject.GetComponent<vThirdPersonController>().useRootMotion = true;
+            playerOnPlatform = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -76,7 +87,7 @@ public class MovingPlatform : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.transform.parent = null;
-            other.gameObject.GetComponent<vThirdPersonController>().useRootMotion = false;
+            playerOnPlatform = false;
         }
     }
 
