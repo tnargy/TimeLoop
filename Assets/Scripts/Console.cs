@@ -1,18 +1,9 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class Console : MonoBehaviour
+public class Console : Machine
 {
-    MeshRenderer helpText;
-    public GameObject Target;
     [SerializeField] public UnityEvent ConsoleButtonPressed;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        helpText = GameObject.Find("HelpText").GetComponent<MeshRenderer>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -20,20 +11,6 @@ public class Console : MonoBehaviour
         if (helpText.enabled && Input.GetButtonDown("Interact"))
         {
             ConsoleButtonPressed.Invoke();
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            helpText.enabled = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            helpText.enabled = false;
         }
     }
 

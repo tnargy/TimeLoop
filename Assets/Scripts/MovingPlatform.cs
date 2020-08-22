@@ -12,7 +12,7 @@ public class MovingPlatform : MonoBehaviour
     public Vector3[] Waypoints;
     public bool Automatic;
     public float moveSpeed, tolerance;
-    [SerializeField] public UnityEvent OnReachedTarget;
+    [SerializeField] public UnityEvent ReachedTarget;
 
     void Start()
     {
@@ -44,7 +44,7 @@ public class MovingPlatform : MonoBehaviour
                 player.GetComponent<vThirdPersonController>().useRootMotion = false;
             }
 
-            OnReachedTarget.Invoke();
+            ReachedTarget.Invoke();
         }
     }
 
