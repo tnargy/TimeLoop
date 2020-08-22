@@ -1,5 +1,6 @@
 ﻿using Invector.vCharacterController;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MovingPlatform : MonoBehaviour
 {
@@ -8,19 +9,19 @@ public class MovingPlatform : MonoBehaviour
     int waypointIndex;
     bool playerOnPlatform;
 
-    public Vector3[] waypoints;
-    public bool automatic;
-    public float moveSpeed, delay_time, tolerance, delay_start;
-
+    public Vector3[] Waypoints;
+    public bool Automatic;
+    public float moveSpeed, tolerance;
+    [SerializeField] public UnityEvent OnReachedTarget;
 
     void Start()
     {
-        if (waypoints == null || waypoints.Length == 0)
+        if (Waypoints == null || Waypoints.Length == 0)
         {
-            waypoints = new Vector3[1] { new Vector3(transform.position.x, transform.position.y, transform.position.z) };
+            Waypoints = new Vector3[1] { new Vector3(transform.position.x, transform.position.y, transform.position.z) };
         }
 
-        current_target = waypoints[waypointIndex];
+        current_target = Waypoints[waypointIndex];
         tolerance = moveSpeed * Time.deltaTime;
         player = GameObject.Find("Player");
     }
@@ -42,7 +43,8 @@ public class MovingPlatform : MonoBehaviour
             {
                 player.GetComponent<vThirdPersonController>().useRootMotion = false;
             }
-            UpdateTarget();
+
+            OnReachedTarget.Invoke();
         }
     }
 
@@ -54,24 +56,20 @@ public class MovingPlatform : MonoBehaviour
         if (heading.magnitude < tolerance)
         {
             transform.position = current_target;
-            delay_start = Time.time;
         }
     }
     private void UpdateTarget()
     {
-        if (automatic)
+        if (Automatic)
         {
-            if (Time.time - delay_start > delay_time)
-            {
-                NextPlatform();
-            }
+            NextPlatform();
         }
     }
 
     public void NextPlatform()
     {
-        waypointIndex = (waypointIndex + 1) % waypoints.Length;
-        current_target = waypoints[waypointIndex];
+        waypointIndex = (waypointIndex + 1) % Waypoints.Length;
+        current_target = Waypoints[waypointIndex];
     }
 
     private void OnTriggerEnter(Collider other)
@@ -91,4 +89,9 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+    public void StartMovingPlatform(bool move)
+    {
+        Automatic = move;
+        UpdateTarget();
+    }
 }

@@ -10,16 +10,21 @@ public class Death : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        spawnLocation = GameObject.Find("Spawn");
+        spawnLocation = GameObject.Find("Spawn Point");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.SetActive(false);
-            other.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
-            other.gameObject.SetActive(true);
+            Respawn();
         }
     }
+
+    public void Respawn()
+    {
+        player.SetActive(false);
+        player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
+        player.SetActive(true);
+    }    
 }
