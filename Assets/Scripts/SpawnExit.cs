@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class SpawnExit : MonoBehaviour
 {
+    public TextMeshProUGUI Announcement;
+
     public void EnableExit()
     {
         transform.GetComponent<CapsuleCollider>().enabled = true;
@@ -11,6 +14,6 @@ public class SpawnExit : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            Debug.Log("Winner");
+            Announcement.enabled = true;
     }
 }
