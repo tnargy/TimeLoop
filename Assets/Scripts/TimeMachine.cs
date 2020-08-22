@@ -10,6 +10,7 @@ public class TimeMachine : Machine
     {
         if (helpText.enabled && Input.GetButtonDown("Interact"))
         {
+            helpText.enabled = false;
             ThruSpaceAndTime.Invoke();
         }
     }
