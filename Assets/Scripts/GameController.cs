@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -26,7 +26,10 @@ public class GameController : MonoBehaviour
 
         foreach (var ghost in ghosts)
         {
-            StartCoroutine(ghost.actions.Dequeue().Execute());
+            foreach (var action in ghost.actions)
+            {
+                StartCoroutine(action.Execute());
+            }
         }
     }
 
@@ -37,9 +40,9 @@ public class GameController : MonoBehaviour
         else
         {
             Ghost g = new Ghost();
-            g.actions = actions;
-            g.player = Instantiate((GameObject)Resources.Load("Assets/Player.prefab"), 
-                GameObject.Find("Spawn Point").transform.position, 
+            g.actions = actions.ToList<Action>();
+            g.player = Instantiate((GameObject)Resources.Load("Ghost.prefab"),
+                GameObject.Find("Spawn Point").transform.position,
                 GameObject.Find("Spawn Point").transform.rotation);
             ghosts.Add(g);
             actions.Clear();

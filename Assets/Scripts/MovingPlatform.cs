@@ -34,7 +34,7 @@ public class MovingPlatform : MonoBehaviour
             {
                 player.GetComponent<vThirdPersonController>().useRootMotion = true;
             }
-            
+
             MovePlatform();
         }
         else
@@ -50,7 +50,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void MovePlatform()
     {
-        
+
         Vector3 heading = current_target - transform.position;
         transform.position += (heading / heading.magnitude) * moveSpeed * Time.deltaTime;
         if (heading.magnitude < tolerance)

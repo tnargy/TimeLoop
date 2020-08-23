@@ -1,5 +1,4 @@
-﻿using Invector.vCharacterController;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Death : MonoBehaviour
 {
@@ -26,5 +25,5 @@ public class Death : MonoBehaviour
         player.SetActive(false);
         player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
         player.SetActive(true);
-    }    
+    }
 }

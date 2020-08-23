@@ -4,5 +4,5 @@ using UnityEngine;
 public struct Ghost
 {
     public GameObject player;
-     public Queue<Action> actions;
+    public List<Action> actions;
 }

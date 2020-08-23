@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Invector.vCharacterController
@@ -50,11 +49,11 @@ namespace Invector.vCharacterController
         };
         #endregion
 
-        public const string _thirdPersonVersion = "2.0";        
+        public const string _thirdPersonVersion = "2.0";
 
         public const string _basicPath = "https://assetstore.unity.com/packages/templates/systems/third-person-controller-basic-locomotion-template-59332";
         public const string _meleePath = "https://assetstore.unity.com/packages/templates/systems/third-person-controller-melee-combat-template-44227";
-        public const string _shooterPath = "https://assetstore.unity.com/packages/templates/systems/third-person-controller-shooter-template-84583";        
+        public const string _shooterPath = "https://assetstore.unity.com/packages/templates/systems/third-person-controller-shooter-template-84583";
 
         public static Texture2D invectorBanner = null;
         public static Texture2D mobileIcon = null;
@@ -73,7 +72,7 @@ namespace Invector.vCharacterController
 
         GUISkin skin;
         private const int windowWidth = 600;
-        private const int windowHeight = 500;      
+        private const int windowHeight = 500;
 
         [MenuItem("Invector/Welcome Window", false, windowWidth)]
 
@@ -93,7 +92,7 @@ namespace Invector.vCharacterController
         void InitStyle()
         {
             if (!skin) skin = Resources.Load("welcomeWindowSkin") as GUISkin;
-            
+
             invectorBanner = (Texture2D)Resources.Load("invectorBanner", typeof(Texture2D));
             mobileIcon = (Texture2D)Resources.Load("mobileIcon", typeof(Texture2D));
             topdownIcon = (Texture2D)Resources.Load("topdownIcon", typeof(Texture2D));
@@ -111,7 +110,7 @@ namespace Invector.vCharacterController
         public void OnGUI()
         {
             GUI.skin = skin;
-            
+
             DrawHeader();
             DrawMenuButtons();
             DrawPageContent();
@@ -142,9 +141,9 @@ namespace Invector.vCharacterController
         private void DrawPageContent()
         {
             GUILayout.BeginArea(new Rect(4, 140, 592, 340));
-            toolBars[toolBarIndex].Draw();            
-            GUILayout.EndArea();            
-            GUILayout.FlexibleSpace();            
+            toolBars[toolBarIndex].Draw();
+            GUILayout.EndArea();
+            GUILayout.FlexibleSpace();
         }
 
         private void DrawBottom()
@@ -155,24 +154,24 @@ namespace Invector.vCharacterController
 
             GUILayout.EndHorizontal();
         }
-        
+
         #region Static ToolBars
 
         public static void FirstRunPageContent()
         {
-            GUILayout.BeginVertical("window");           
+            GUILayout.BeginVertical("window");
 
             GUILayout.Label(" ", GUI.skin.GetStyle("TemplatesPromo"), GUILayout.Width(586));
 
             EditorGUIUtility.AddCursorRect(new Rect(0, 0, 600, 320), MouseCursor.Link);
-            
+
             GUILayout.BeginVertical();
             GUILayout.Space(-320);
             GUILayout.BeginHorizontal();
             GUILayout.Space(5);
 
             if (GUILayout.Button("LOCOMOTION", GUI.skin.GetStyle("CustomButton"), GUILayout.Width(188)))
-            {                
+            {
                 Application.OpenURL(_basicPath);
             }
             if (GUILayout.Button("MELEE COMBAT", GUI.skin.GetStyle("CustomButton"), GUILayout.Width(190)))
@@ -223,18 +222,18 @@ namespace Invector.vCharacterController
 
             if (GUILayout.Button(button))
             {
-                if(useUrl)
+                if (useUrl)
                     Application.OpenURL(path);
                 else
                     AssetDatabase.ImportPackage(path, true);
             }
 
             GUILayout.EndHorizontal();
-        }       
+        }
 
         public static void GettingStartedPageContent()
         {
-            GUILayout.BeginVertical("window");            
+            GUILayout.BeginVertical("window");
 
             GUILayout.BeginHorizontal("box");
             GUILayout.Label("<b>1</b>- Make sure your Character FBX is using the AnimationType: 'Humanoid' in the Rig tab, so you can retarget the default animations from our Animator to your new Character.");
@@ -253,7 +252,7 @@ namespace Invector.vCharacterController
             GUILayout.EndHorizontal();
             GUILayout.Space(6);
 
-            EditorGUILayout.HelpBox("- ALWAYS BACKUP your project before updating!", MessageType.Warning, true);            
+            EditorGUILayout.HelpBox("- ALWAYS BACKUP your project before updating!", MessageType.Warning, true);
             EditorGUILayout.HelpBox("- To update your template you need to Delete the Invector folder, this way you won't get any conflicts between old files and newer files.", MessageType.Info, true);
 
             GUILayout.FlexibleSpace();
@@ -271,13 +270,13 @@ namespace Invector.vCharacterController
                 Application.OpenURL("http://invector.proboards.com/");
             }
             GUILayout.EndVertical();
-         
+
 
             GUILayout.FlexibleSpace();
             GUILayout.EndVertical();
         }
 
-#endregion
+        #endregion
 
     }
 }
