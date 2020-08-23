@@ -4,20 +4,35 @@ using UnityEngine;
 public class Move : Action
 {
     Vector3 destination;
-    float duration;
 
-    public Move(Vector3 destination, float duration)
+    public Move(Vector3 destination)
     {
         this.destination = destination;
-        this.duration = duration;
     }
 
     public override IEnumerator Execute()
     {
         while (player.transform.position != destination)
         {
-            yield return null;
+            float step = 5f;
+            player.transform.position = Vector3.MoveTowards(player.transform.position, destination, step);
+            yield return player.transform.position;
         }
+        yield return null;
+    }
+}
+
+public class Interact : Action
+{
+    GameObject target;
+
+    public Interact(GameObject target)
+    {
+        this.target = target;
+    }
+
+    public override IEnumerator Execute()
+    {
         yield return null;
     }
 }
