@@ -16,9 +16,9 @@ public class Move : Action
         {
             float step = 5f;
             player.transform.position = Vector3.MoveTowards(player.transform.position, destination, step);
-            yield return player.transform.position;
+            yield return new WaitForSeconds(5);
         }
-        yield return null;
+        yield return "Done";
     }
 }
 
