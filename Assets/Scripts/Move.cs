@@ -22,24 +22,9 @@ public class Move : Action
             moveposition.z = Mathf.MoveTowards(player.transform.position.z, destination.z, speed);
             player.GetComponent<Rigidbody>().MovePosition(moveposition);
             player.GetComponent<Rigidbody>().MoveRotation(rotation);
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(duration);
         }
         player.transform.position = destination;
         yield return "Done";
-    }
-}
-
-public class Interact : Action
-{
-    GameObject target;
-
-    public Interact(GameObject target)
-    {
-        this.target = target;
-    }
-
-    public override IEnumerator Execute(float deltaTime)
-    {
-        yield return null;
     }
 }

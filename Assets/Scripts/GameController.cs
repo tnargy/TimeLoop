@@ -28,27 +28,28 @@ public class GameController : MonoBehaviour
         {
             Action action = ghost.actions.Dequeue();
             StartCoroutine(action.Execute(Time.deltaTime));
-            ghost.actions.Enqueue(action);
         }
     }
 
     public void AddInteract(GameObject target)
     {
         if (target.name == "Console")
+        {
             actions.Enqueue(new Interact(target));
+        }
         else
         {
-            Ghost g = new Ghost();
-            g.player = Instantiate((GameObject)Resources.Load("Ghost"));
             GameObject spawnLocation = GameObject.Find("Spawn Point");
-            g.player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
-            foreach (var action in actions)
+            var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"));
+            ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
+            for (int i = 0; i < actions.Count; i++)
             {
-                action.player = g.player;
+                var action = actions.Dequeue();
+                action.player = ghostObj;
+                actions.Enqueue(action);
             }
-            g.actions = actions;
+            Ghost g = new Ghost(ghostObj, actions);
             ghosts.Add(g);
-            actions.Clear();
         }
     }
 }
