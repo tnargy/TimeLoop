@@ -12,19 +12,10 @@ public class Move : Action
         this.rotation = rotation;
     }
 
-    public override IEnumerator Execute(float deltaTime)
+    public override IEnumerator Execute()
     {
-        while (Vector3.Distance(player.transform.position, destination) > 0.1f)
-        {
-            float speed = 5 * deltaTime;
-            Vector3 moveposition = player.transform.position;
-            moveposition.x = Mathf.MoveTowards(player.transform.position.x, destination.x, speed);
-            moveposition.z = Mathf.MoveTowards(player.transform.position.z, destination.z, speed);
-            player.GetComponent<Rigidbody>().MovePosition(moveposition);
-            player.GetComponent<Rigidbody>().MoveRotation(rotation);
-            yield return new WaitForSeconds(duration);
-        }
-        player.transform.position = destination;
-        yield return "Done";
+        player.GetComponent<Rigidbody>().MovePosition(destination);
+        player.GetComponent<Rigidbody>().MoveRotation(rotation);
+        yield return new WaitForSeconds(duration);
     }
 }

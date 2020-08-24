@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     Queue<Action> actions;
     List<Ghost> ghosts;
     GameObject player;
+    float pollTime;
 
     // Start is called before the first frame update
     void Start()
@@ -19,15 +20,19 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pollTime += Time.deltaTime;
         if (!Input.GetButtonDown("Interact"))
         {
-            actions.Enqueue(new Move(player.transform.position, player.transform.rotation));
+            var move = new Move(player.transform.position, player.transform.rotation);
+            move.duration = pollTime;
+            actions.Enqueue(move);
+            pollTime = 0;
         }
 
         foreach (var ghost in ghosts)
         {
             Action action = ghost.actions.Dequeue();
-            StartCoroutine(action.Execute(Time.deltaTime));
+            StartCoroutine(action.Execute());
         }
     }
 
@@ -35,7 +40,10 @@ public class GameController : MonoBehaviour
     {
         if (target.name == "Console")
         {
-            actions.Enqueue(new Interact(target));
+            var interact = new Interact(target);
+            interact.duration = pollTime;
+            actions.Enqueue(interact);
+            pollTime = 0;
         }
         else
         {
@@ -50,6 +58,7 @@ public class GameController : MonoBehaviour
             }
             Ghost g = new Ghost(ghostObj, actions);
             ghosts.Add(g);
+            pollTime = 0;
         }
     }
 }

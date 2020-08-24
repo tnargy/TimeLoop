@@ -10,9 +10,9 @@ public class Interact : Action
         this.target = target;
     }
 
-    public override IEnumerator Execute(float deltaTime)
+    public override IEnumerator Execute()
     {
         target.GetComponent<Console>().ConsoleButtonPressed.Invoke();
-        yield return null;
+        yield return new WaitForSeconds(duration);
     }
 }

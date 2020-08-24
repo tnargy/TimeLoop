@@ -5,5 +5,5 @@ public abstract class Action
 {
     public GameObject player;
     public float duration;
-    public abstract IEnumerator Execute(float deltaTime);
+    public abstract IEnumerator Execute();
 }
