@@ -8,8 +8,6 @@ public class GameController : MonoBehaviour
     List<Ghost> ghosts;
     GameObject player;
 
-    float pollTime;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -21,19 +19,16 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pollTime += Time.deltaTime;
-        if (!Input.GetButtonDown("Interact") && pollTime >= 1f)
+        if (!Input.GetButtonDown("Interact"))
         {
-            actions.Enqueue(new Move(player.transform.position));
-            pollTime = 0f;
+            actions.Enqueue(new Move(player.transform.position, player.transform.rotation));
         }
 
         foreach (var ghost in ghosts)
         {
-            foreach (var action in ghost.actions)
-            {
-                StartCoroutine(action.Execute());
-            }
+            Action action = ghost.actions.Dequeue();
+            StartCoroutine(action.Execute(Time.deltaTime));
+            ghost.actions.Enqueue(action);
         }
     }
 
@@ -44,10 +39,14 @@ public class GameController : MonoBehaviour
         else
         {
             Ghost g = new Ghost();
-            g.actions = actions.ToList<Action>();
-            g.player = Instantiate((GameObject)Resources.Load("Ghost"),
-                GameObject.Find("Spawn Point").transform.position,
-                GameObject.Find("Spawn Point").transform.rotation);
+            g.player = Instantiate((GameObject)Resources.Load("Ghost"));
+            GameObject spawnLocation = GameObject.Find("Spawn Point");
+            g.player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
+            foreach (var action in actions)
+            {
+                action.player = g.player;
+            }
+            g.actions = actions;
             ghosts.Add(g);
             actions.Clear();
         }
