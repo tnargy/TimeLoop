@@ -8,7 +8,7 @@ namespace Invector.vCamera
     public class vThirdPersonCameraEditor : Editor
     {
         GUISkin skin;
-        vThirdPersonCamera tpCamera;      
+        vThirdPersonCamera tpCamera;
         private Texture2D m_Logo = null;
 
         void OnSceneGUI()
@@ -43,7 +43,7 @@ namespace Invector.vCamera
             GUILayout.EndVertical();
             EditorGUILayout.EndVertical();
 
-            GUILayout.Space(2);           
-        }       
+            GUILayout.Space(2);
+        }
     }
 }

@@ -3,7 +3,7 @@
 public class Machine : MonoBehaviour
 {
     public MeshRenderer helpText;
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

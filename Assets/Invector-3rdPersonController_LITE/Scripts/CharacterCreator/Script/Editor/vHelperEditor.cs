@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Invector
 {
@@ -16,7 +16,7 @@ namespace Invector
         {
             Application.OpenURL("http://inv3ctor.wix.com/invector#!faq/cnni7");
         }
-       
+
         [MenuItem("Invector/Help/Release Notes")]
         public static void ReleaseNotes()
         {
@@ -33,6 +33,6 @@ namespace Invector
         public static void Documentation()
         {
             Application.OpenURL("http://www.invector.xyz/thirdpersondocumentation");
-        }       
+        }
     }
 }

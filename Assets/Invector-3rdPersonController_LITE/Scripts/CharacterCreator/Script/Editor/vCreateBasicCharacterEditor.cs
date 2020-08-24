@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Invector.vCharacterController
 {
@@ -10,7 +8,7 @@ namespace Invector.vCharacterController
         GUISkin skin;
         GameObject charObj;
         Animator charAnimator;
-        public  RuntimeAnimatorController controller;
+        public RuntimeAnimatorController controller;
         public GameObject hud;
         Vector2 rect = new Vector2(500, 540);
         Vector2 scrool;
@@ -28,7 +26,7 @@ namespace Invector.vCharacterController
 
         bool isHuman, isValidAvatar, charExist;
         void OnEnable()
-        {           
+        {
             m_Logo = Resources.Load("icon_v2") as Texture2D;
             charObj = Selection.activeGameObject;
             if (charObj)
@@ -36,7 +34,7 @@ namespace Invector.vCharacterController
                 charAnimator = charObj.GetComponent<Animator>();
                 humanoidpreview = Editor.CreateEditor(charObj);
             }
-                
+
             charExist = charAnimator != null;
             isHuman = charExist ? charAnimator.isHuman : false;
             isValidAvatar = charExist ? charAnimator.avatar.isValid : false;
@@ -72,15 +70,15 @@ namespace Invector.vCharacterController
             if (charObj != null && charObj.GetComponent<vThirdPersonController>() != null)
                 EditorGUILayout.HelpBox("This gameObject already contains the component vThirdPersonController", MessageType.Warning);
 
-            controller = EditorGUILayout.ObjectField("Animator Controller: ", controller, typeof(RuntimeAnimatorController), false) as RuntimeAnimatorController;            
-            
-            GUILayout.EndVertical();          
+            controller = EditorGUILayout.ObjectField("Animator Controller: ", controller, typeof(RuntimeAnimatorController), false) as RuntimeAnimatorController;
+
+            GUILayout.EndVertical();
 
             if (charObj)
             {
-                charAnimator = charObj.GetComponent<Animator>();    
+                charAnimator = charObj.GetComponent<Animator>();
             }
-                
+
             charExist = charAnimator != null;
             isHuman = charExist ? charAnimator.isHuman : false;
             isValidAvatar = charExist ? charAnimator.avatar.isValid : false;
@@ -128,7 +126,7 @@ namespace Invector.vCharacterController
             // base for the character
             var _ThirdPerson = GameObject.Instantiate(charObj, Vector3.zero, Quaternion.identity) as GameObject;
             if (!_ThirdPerson)
-                return;          
+                return;
             _ThirdPerson.name = "vBasicController_" + charObj.gameObject.name;
             _ThirdPerson.AddComponent<vThirdPersonController>();
             _ThirdPerson.AddComponent<vThirdPersonInput>();
@@ -157,7 +155,7 @@ namespace Invector.vCharacterController
             var tpcamera = camera.GetComponent<vThirdPersonCamera>();
 
             if (tpcamera == null)
-                tpcamera = camera.AddComponent<vThirdPersonCamera>();           
+                tpcamera = camera.AddComponent<vThirdPersonCamera>();
 
             _ThirdPerson.tag = "Player";
 
@@ -189,7 +187,7 @@ namespace Invector.vCharacterController
             var foot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
             var hips = animator.GetBoneTransform(HumanBodyBones.Hips);
             return (float)System.Math.Round(Vector3.Distance(foot.position, hips.position) * 2f, 2);
-        }       
+        }
 
     }
 }
