@@ -30,7 +30,7 @@ public class GhostController : MonoBehaviour
         pollTime += Time.deltaTime;
         if (playerRB.position != lastRecordedPosition || playerRB.rotation != lastRecordedRotation)
         {
-            var move = new Move(playerRB.position, playerRB.rotation)
+            var move = new Move(playerRB.position, playerRB.rotation);
             actions.Enqueue(move);
             pollTime = 0;
             lastRecordedPosition = playerRB.position;
@@ -68,7 +68,7 @@ public class GhostController : MonoBehaviour
     {
         if (target.name == "Console")
         {
-            var interact = new Interact(target)
+            var interact = new Interact(target);
             actions.Enqueue(interact);
             pollTime = 0;
         }
