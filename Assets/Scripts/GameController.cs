@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -6,12 +7,14 @@ public class GameController : MonoBehaviour
     Queue<Action> actions;
     List<Ghost> ghosts;
     GameObject player;
+    Rigidbody playerRB;
     float pollTime;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
+        playerRB = player.GetComponent<Rigidbody>();
         actions = new Queue<Action>();
         ghosts = new List<Ghost>();
     }
@@ -20,9 +23,9 @@ public class GameController : MonoBehaviour
     void Update()
     {
         pollTime += Time.deltaTime;
-        if (!Input.GetButtonDown("Interact"))
+        if (!Input.GetButtonDown("Interact") && player.transform.hasChanged)
         {
-            var move = new Move(player.transform.position, player.transform.rotation);
+            var move = new Move(playerRB.position, playerRB.rotation);
             move.duration = pollTime;
             actions.Enqueue(move);
             pollTime = 0;
@@ -30,9 +33,19 @@ public class GameController : MonoBehaviour
 
         foreach (var ghost in ghosts)
         {
-            Action action = ghost.actions.Dequeue();
-            StartCoroutine(action.Execute());
+            StartCoroutine(RunGhost(ghost));
         }
+    }
+
+    IEnumerator RunGhost(Ghost ghost)
+    {
+        while (ghost.actions.Count > 0)
+        {
+            var action = ghost.actions.Dequeue();
+            action.Execute();
+            yield return new WaitForSeconds(action.duration);
+        }
+        yield return null;
     }
 
     public void AddInteract(GameObject target)

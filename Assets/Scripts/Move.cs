@@ -12,10 +12,9 @@ public class Move : Action
         this.rotation = rotation;
     }
 
-    public override IEnumerator Execute()
+    public override void Execute()
     {
         player.GetComponent<Rigidbody>().MovePosition(destination);
         player.GetComponent<Rigidbody>().MoveRotation(rotation);
-        yield return new WaitForSeconds(duration);
     }
 }
