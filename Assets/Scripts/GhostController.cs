@@ -14,6 +14,8 @@ public class GhostController : MonoBehaviour
     Vector3 lastRecordedPosition;
     Quaternion lastRecordedRotation;
 
+    public Ghost[] Ghosts { get => ghosts.ToArray(); }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +29,10 @@ public class GhostController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pollTime += Time.deltaTime;
         if (playerRB.position != lastRecordedPosition || playerRB.rotation != lastRecordedRotation)
         {
             var move = new Move(playerRB.position, playerRB.rotation);
             actions.Enqueue(move);
-            pollTime = 0;
             lastRecordedPosition = playerRB.position;
             lastRecordedRotation = playerRB.rotation;
         }
@@ -45,7 +45,7 @@ public class GhostController : MonoBehaviour
 
     void Play()
     {
-        foreach (var ghost in ghosts)
+        foreach (var ghost in Ghosts)
         {
             StartCoroutine(StartGhost(ghost));
         }
@@ -61,7 +61,6 @@ public class GhostController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         Destroy(ghost.player);
-        ghosts.Remove(ghost);
     }
 
     public void AddInteract(GameObject target)
@@ -70,24 +69,32 @@ public class GhostController : MonoBehaviour
         {
             var interact = new Interact(target);
             actions.Enqueue(interact);
-            pollTime = 0;
         }
         else
         {
-            GameObject spawnLocation = GameObject.Find("Spawn Point");
-            var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"));
-            ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
-            for (int i = 0; i < actions.Count; i++)
+            target.transform.Find("HelpText").GetComponent<MeshRenderer>().enabled = false;
+            foreach (var ghost in Ghosts)
             {
-                var action = actions.Dequeue();
-                action.player = ghostObj;
-                actions.Enqueue(action);
+                SpawnGhost(ghost.actions);
             }
-            Ghost g = new Ghost(ghostObj, actions);
-            ghosts.Add(g);
-            pollTime = 0;
+            ghosts.Add(SpawnGhost(actions));
             playing = true;
             actions.Clear();
         }
+    }
+
+    private Ghost SpawnGhost(Queue<Action> actions)
+    {
+        GameObject spawnLocation = GameObject.Find("Spawn Point");
+        var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"));
+        ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
+        for (int i = 0; i < actions.Count; i++)
+        {
+            var action = actions.Dequeue();
+            action.player = ghostObj;
+            actions.Enqueue(action);
+        }
+        Ghost g = new Ghost(ghostObj, actions);
+        return g;
     }
 }
