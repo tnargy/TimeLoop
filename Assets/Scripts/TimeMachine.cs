@@ -8,7 +8,7 @@ public class TimeMachine : Machine
     // Update is called once per frame
     void Update()
     {
-        if (helpText.enabled && Input.GetButtonDown("Interact"))
+        if (helpText.enabled && Input.GetButtonDown("Interact") && isPlayer)
         {
             helpText.enabled = false;
             ThruSpaceAndTime.Invoke();

@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         pollTime += Time.deltaTime;
-        if (!Input.GetButtonDown("Interact") && player.transform.hasChanged)
+        if (!Input.GetButtonDown("Interact") && pollTime >= 0.5f)
         {
             var move = new Move(playerRB.position, playerRB.rotation);
             move.duration = pollTime;
