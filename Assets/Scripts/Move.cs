@@ -13,7 +13,6 @@ public class Move : Action
 
     public override void Execute()
     {
-        player.GetComponent<Rigidbody>().MovePosition(destination);
-        player.GetComponent<Rigidbody>().MoveRotation(rotation);
+        player.transform.SetPositionAndRotation(destination, rotation);
     }
 }

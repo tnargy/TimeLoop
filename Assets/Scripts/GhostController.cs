@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GhostController : MonoBehaviour
 {
     Queue<Action> actions;
     List<Ghost> ghosts;
     GameObject player;
     Rigidbody playerRB;
     float pollTime;
+    bool playing;
+    Vector3 lastRecordedPosition;
+    Quaternion lastRecordedRotation;
 
     // Start is called before the first frame update
     void Start()
     {
+        playing = false;
         player = GameObject.Find("Player");
         playerRB = player.GetComponent<Rigidbody>();
         actions = new Queue<Action>();
@@ -23,37 +28,47 @@ public class GameController : MonoBehaviour
     void Update()
     {
         pollTime += Time.deltaTime;
-        if (!Input.GetButtonDown("Interact") && pollTime >= 0.5f)
+        if (playerRB.position != lastRecordedPosition || playerRB.rotation != lastRecordedRotation)
         {
-            var move = new Move(playerRB.position, playerRB.rotation);
-            move.duration = pollTime;
+            var move = new Move(playerRB.position, playerRB.rotation)
             actions.Enqueue(move);
             pollTime = 0;
+            lastRecordedPosition = playerRB.position;
+            lastRecordedRotation = playerRB.rotation;
         }
-
-        foreach (var ghost in ghosts)
+        
+        if (playing)
         {
-            StartCoroutine(RunGhost(ghost));
+            Play();
         }
     }
 
-    IEnumerator RunGhost(Ghost ghost)
+    void Play()
+    {
+        foreach (var ghost in ghosts)
+        {
+            StartCoroutine(StartGhost(ghost));
+        }
+        playing = false;
+    }
+
+    IEnumerator StartGhost(Ghost ghost)
     {
         while (ghost.actions.Count > 0)
         {
             var action = ghost.actions.Dequeue();
             action.Execute();
-            yield return new WaitForSeconds(action.duration);
+            yield return new WaitForFixedUpdate();
         }
-        yield return null;
+        Destroy(ghost.player);
+        ghosts.Remove(ghost);
     }
 
     public void AddInteract(GameObject target)
     {
         if (target.name == "Console")
         {
-            var interact = new Interact(target);
-            interact.duration = pollTime;
+            var interact = new Interact(target)
             actions.Enqueue(interact);
             pollTime = 0;
         }
@@ -71,6 +86,8 @@ public class GameController : MonoBehaviour
             Ghost g = new Ghost(ghostObj, actions);
             ghosts.Add(g);
             pollTime = 0;
+            playing = true;
+            actions.Clear();
         }
     }
 }

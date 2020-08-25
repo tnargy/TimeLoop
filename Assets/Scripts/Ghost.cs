@@ -9,6 +9,10 @@ public struct Ghost
     public Ghost(GameObject player, Queue<Action> actions)
     {
         this.player = player;
-        this.actions = actions;
+        this.actions = new Queue<Action>();
+        foreach (var a in actions)
+        {
+            this.actions.Enqueue(a);
+        }
     }
 }
