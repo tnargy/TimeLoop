@@ -4,15 +4,15 @@ using UnityEngine;
 public struct Ghost
 {
     public GameObject player;
-    public Queue<Action> actions;
+    public List<Action> actions;
 
-    public Ghost(GameObject player, Queue<Action> actions)
+    public Ghost(GameObject player, List<Action> actions)
     {
         this.player = player;
-        this.actions = new Queue<Action>();
+        this.actions = new List<Action>();
         foreach (var a in actions)
         {
-            this.actions.Enqueue(a);
+            this.actions.Add(a);
         }
     }
 }

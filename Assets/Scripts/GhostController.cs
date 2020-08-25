@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GhostController : MonoBehaviour
 {
-    Queue<Action> actions;
+    List<Action> actions;
     List<Ghost> ghosts;
     GameObject player;
     Rigidbody playerRB;
@@ -14,15 +14,13 @@ public class GhostController : MonoBehaviour
     Vector3 lastRecordedPosition;
     Quaternion lastRecordedRotation;
 
-    public Ghost[] Ghosts { get => ghosts.ToArray(); }
-
     // Start is called before the first frame update
     void Start()
     {
         playing = false;
         player = GameObject.Find("Player");
         playerRB = player.GetComponent<Rigidbody>();
-        actions = new Queue<Action>();
+        actions = new List<Action>();
         ghosts = new List<Ghost>();
     }
 
@@ -32,7 +30,7 @@ public class GhostController : MonoBehaviour
         if (playerRB.position != lastRecordedPosition || playerRB.rotation != lastRecordedRotation)
         {
             var move = new Move(playerRB.position, playerRB.rotation);
-            actions.Enqueue(move);
+            actions.Add(move);
             lastRecordedPosition = playerRB.position;
             lastRecordedRotation = playerRB.rotation;
         }
@@ -45,7 +43,7 @@ public class GhostController : MonoBehaviour
 
     void Play()
     {
-        foreach (var ghost in Ghosts)
+        foreach (var ghost in ghosts)
         {
             StartCoroutine(StartGhost(ghost));
         }
@@ -54,9 +52,8 @@ public class GhostController : MonoBehaviour
 
     IEnumerator StartGhost(Ghost ghost)
     {
-        while (ghost.actions.Count > 0)
+        foreach (var action in ghost.actions)
         {
-            var action = ghost.actions.Dequeue();
             action.Execute();
             yield return new WaitForFixedUpdate();
         }
@@ -68,12 +65,12 @@ public class GhostController : MonoBehaviour
         if (target.name == "Console")
         {
             var interact = new Interact(target);
-            actions.Enqueue(interact);
+            actions.Add(interact);
         }
         else
         {
             target.transform.Find("HelpText").GetComponent<MeshRenderer>().enabled = false;
-            foreach (var ghost in Ghosts)
+            foreach (var ghost in ghosts)
             {
                 SpawnGhost(ghost.actions);
             }
@@ -83,16 +80,15 @@ public class GhostController : MonoBehaviour
         }
     }
 
-    private Ghost SpawnGhost(Queue<Action> actions)
+    private Ghost SpawnGhost(List<Action> actions)
     {
         GameObject spawnLocation = GameObject.Find("Spawn Point");
         var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"));
         ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
         for (int i = 0; i < actions.Count; i++)
         {
-            var action = actions.Dequeue();
+            var action = actions[i];
             action.player = ghostObj;
-            actions.Enqueue(action);
         }
         Ghost g = new Ghost(ghostObj, actions);
         return g;

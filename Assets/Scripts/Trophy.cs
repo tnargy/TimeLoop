@@ -16,5 +16,6 @@ public class Trophy : MonoBehaviour
     public void Cleanup()
     {
         Destroy(gameObject);
+        GameObject.Find("Death").GetComponent<Death>().restart = true;
     }
 }
