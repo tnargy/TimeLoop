@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Player Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: db629382af3f4ee4296377ec8ad0b70a, type: 3}
+    - {fileID: 102900000, guid: 87384048b438d2649ba898e349158502, type: 3}
+    totalSpriteSurfaceArea: 9912394
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 4407b6e0a11d57947bb57c8c64481daf, type: 3}
+  - {fileID: 21300000, guid: c8164d5157b0ccd42a0ce44a20cc16b0, type: 3}
+  - {fileID: 21300000, guid: f1cdca221e862424faa4d1d71cf94e60, type: 3}
+  - {fileID: 21300000, guid: 5b8b889209eb01b4da2dd34e3d25bb6b, type: 3}
+  - {fileID: 21300000, guid: 98a4d184b522dd74ebf2f9af8482b134, type: 3}
+  - {fileID: 21300000, guid: 195e66b44fe1bad40b3084b66d68372e, type: 3}
+  - {fileID: 21300000, guid: 0d000ab5e904f20489657a7c5217b8a6, type: 3}
+  - {fileID: 21300000, guid: 66da7fe5e7eca2d48aeb265ef4365a57, type: 3}
+  - {fileID: 21300000, guid: e51c2d466645cac45aac314025bdd369, type: 3}
+  - {fileID: 21300000, guid: fabc7717e7713b541a4ba7fb51c99cd2, type: 3}
+  - {fileID: 21300000, guid: 4f2f43877f9c9d648bc3df7042bbd9b6, type: 3}
+  - {fileID: 21300000, guid: 916c8f18aa1498248897dc70fee8bbde, type: 3}
+  - {fileID: 21300000, guid: e0e3a29896e85a1408d19389e8e70c61, type: 3}
+  - {fileID: 21300000, guid: a0393eb88c44adb4780c3665529e8970, type: 3}
+  - {fileID: 21300000, guid: 5d2d679994b4f004cae57fdee049b911, type: 3}
+  - {fileID: 21300000, guid: bcbab93c88d56024ca1d292c12430aed, type: 3}
+  - {fileID: 21300000, guid: 57a0a84caa723494d9401a5b7081b21c, type: 3}
+  - {fileID: 21300000, guid: 3fc7007c35e54d042b8f37762d77acc8, type: 3}
+  - {fileID: 21300000, guid: ad2ca9ac41e1d3749a89f2e0a9ddaa29, type: 3}
+  - {fileID: 21300000, guid: 1cc99dbc1da78784097c73b1f1137c12, type: 3}
+  - {fileID: 21300000, guid: 0401befdd7465b747876b507c3d9e0e8, type: 3}
+  - {fileID: 21300000, guid: 37d641ae217e43541857fdae5b5fc589, type: 3}
+  - {fileID: 21300000, guid: 827a1fce4c7ed244898c0f9d7c74a0d0, type: 3}
+  - {fileID: 21300000, guid: 411f4fee5d6427d449c7ba5faf9d63cc, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Run NE 1
+  - RightIdle
+  - DownLeftIdle
+  - Run S 1
+  - DownRightIdle
+  - Run SW 2
+  - UpIdle
+  - Run NW 1
+  - Run SE 2
+  - Run S 2
+  - DownIdle
+  - Run W 2
+  - Run N 2
+  - Run NE 2
+  - UpLeftIdle
+  - Run N 1
+  - UpRightIdle
+  - Run E 1
+  - LeftIdle
+  - Run SE 1
+  - Run SW 1
+  - Run W 1
+  - Run E 2
+  - Run NW 2
+  m_Tag: Player Atlas
+  m_IsVariant: 0
