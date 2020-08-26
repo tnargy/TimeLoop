@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     Animator animator;
     CharacterController characterController;
-    float moveSpeed = 5;
+    float moveSpeed = 1;
     int lastDirection;
 
     public string[] staticDirections = { "Static N", "Static NW", "Static W", "Static SW", "Static S", "Static SE", "Static E", "Static NE" };
