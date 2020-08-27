@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Death : MonoBehaviour
 {
@@ -17,10 +16,14 @@ public class Death : MonoBehaviour
         player.SetActive(false);
         player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
         player.SetActive(true);
-    }
 
-    public void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().path);
+        Transform trophy = player.transform.Find("Trophy");
+        if (trophy != null)
+        {
+            GameObject goalLocation = GameObject.Find("Goal Spawn");
+            trophy.SetParent(null);
+            trophy.GetComponent<MeshRenderer>().enabled = true;
+            trophy.position = goalLocation.transform.position;
+        }
     }
 }
