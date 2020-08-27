@@ -26,7 +26,7 @@ public class GhostController : MonoBehaviour
     void Update()
     {
         pollTime += Time.deltaTime;
-        if (playerRB.position != lastRecordedPosition || playerRB.rotation != lastRecordedRotation)
+        if (Vector3.Distance(playerRB.position, lastRecordedPosition) > 0.1f || playerRB.rotation != lastRecordedRotation)
         {
             var move = new Move(playerRB.position, playerRB.rotation)
             {
@@ -59,7 +59,6 @@ public class GhostController : MonoBehaviour
         {
             action.Execute();
             yield return new WaitForSeconds(action.waitTime);
-            // yield return new WaitForFixedUpdate();
         }
         Destroy(ghost.player);
     }

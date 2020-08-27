@@ -24,7 +24,7 @@ public class MovingPlatform : MonoBehaviour
         tolerance = moveSpeed * Time.deltaTime;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (transform.position != current_target)
         {
