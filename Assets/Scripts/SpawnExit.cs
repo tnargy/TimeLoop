@@ -13,7 +13,6 @@ public class SpawnExit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && other.transform.Find("Trophy") != null)
-            Announcement.enabled = true;
+        Debug.Log("Game Over");       
     }
 }

@@ -7,6 +7,6 @@ public class TimeMachine : Machine
 
     public void Interact()
     {
-        ThruSpaceAndTime.Invoke();
+        // ThruSpaceAndTime.Invoke();
     }
 }

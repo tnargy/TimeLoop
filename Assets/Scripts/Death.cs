@@ -3,30 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class Death : MonoBehaviour
 {
-    GameObject player;
-    GameObject spawnLocation;
-    public bool restart = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        player = GameObject.Find("Player");
-        spawnLocation = GameObject.Find("Spawn Point");
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && other.name == "Player")
+        if (other.CompareTag("Player"))
         {
-            Respawn();
+            Respawn(other.gameObject);
         }
     }
 
-    public void Respawn()
+    public static void Respawn(GameObject player)
     {
-        if (restart)
-            Restart();
-
+        GameObject spawnLocation = GameObject.Find("Spawn Point");
         player.SetActive(false);
         player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
         player.SetActive(true);

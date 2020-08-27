@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +10,7 @@ public class PlayerController : MonoBehaviour
         if (closeMachine != null && Input.GetButtonDown("Interact"))
         {
             closeMachine.SendMessage("Interact");
+            GetComponentInChildren<GhostController>().AddInteract(closeMachine.gameObject);
         }
     }
 }

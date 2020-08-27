@@ -85,6 +85,7 @@ public class GhostController : MonoBehaviour
             ghosts.Add(SpawnGhost(actions));
             playing = true;
             actions.Clear();
+            Death.Respawn(transform.parent.gameObject);
         }
     }
 

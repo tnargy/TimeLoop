@@ -10,13 +10,8 @@ public class Trophy : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CollectTrophy.Invoke();
+            transform.GetComponent<MeshRenderer>().enabled = false;
             transform.SetParent(other.transform);
         }
-    }
-
-    public void Cleanup()
-    {
-        transform.GetComponent<MeshRenderer>().enabled = false;
-        GameObject.Find("Death").GetComponent<Death>().restart = true;
     }
 }
