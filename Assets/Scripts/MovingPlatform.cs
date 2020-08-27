@@ -74,7 +74,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Ghost"))
         {
             other.transform.parent = transform;
             playerOnPlatform = true;
@@ -82,7 +82,7 @@ public class MovingPlatform : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Ghost"))
         {
             other.transform.parent = null;
             playerOnPlatform = false;

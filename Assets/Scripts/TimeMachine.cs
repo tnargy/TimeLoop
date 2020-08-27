@@ -5,13 +5,8 @@ public class TimeMachine : Machine
 {
     [SerializeField] public UnityEvent ThruSpaceAndTime;
 
-    // Update is called once per frame
-    void Update()
+    public void Interact()
     {
-        if (helpText.enabled && Input.GetButtonDown("Interact") && isPlayer)
-        {
-            helpText.enabled = false;
-            ThruSpaceAndTime.Invoke();
-        }
+        ThruSpaceAndTime.Invoke();
     }
 }

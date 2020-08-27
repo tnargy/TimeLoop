@@ -7,7 +7,6 @@ public class GhostController : MonoBehaviour
 {
     List<Action> actions;
     List<Ghost> ghosts;
-    GameObject player;
     Rigidbody playerRB;
     float pollTime;
     bool playing;
@@ -18,8 +17,7 @@ public class GhostController : MonoBehaviour
     void Start()
     {
         playing = false;
-        player = GameObject.Find("Player");
-        playerRB = player.GetComponent<Rigidbody>();
+        playerRB = transform.parent.GetComponent<Rigidbody>();
         actions = new List<Action>();
         ghosts = new List<Ghost>();
     }
@@ -27,12 +25,17 @@ public class GhostController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pollTime += Time.deltaTime;
         if (playerRB.position != lastRecordedPosition || playerRB.rotation != lastRecordedRotation)
         {
-            var move = new Move(playerRB.position, playerRB.rotation);
+            var move = new Move(playerRB.position, playerRB.rotation)
+            {
+                waitTime = pollTime
+            };
             actions.Add(move);
             lastRecordedPosition = playerRB.position;
             lastRecordedRotation = playerRB.rotation;
+            pollTime = 0;
         }
         
         if (playing)
@@ -55,7 +58,8 @@ public class GhostController : MonoBehaviour
         foreach (var action in ghost.actions)
         {
             action.Execute();
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(action.waitTime);
+            // yield return new WaitForFixedUpdate();
         }
         Destroy(ghost.player);
     }
@@ -64,8 +68,12 @@ public class GhostController : MonoBehaviour
     {
         if (target.name == "Console")
         {
-            var interact = new Interact(target);
+            var interact = new Interact(target)
+            {
+                waitTime = pollTime
+            };
             actions.Add(interact);
+            pollTime = 0;
         }
         else
         {
@@ -83,7 +91,7 @@ public class GhostController : MonoBehaviour
     private Ghost SpawnGhost(List<Action> actions)
     {
         GameObject spawnLocation = GameObject.Find("Spawn Point");
-        var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"));
+        var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"), transform.parent);
         ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
         for (int i = 0; i < actions.Count; i++)
         {

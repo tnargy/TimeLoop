@@ -6,12 +6,9 @@ public class Console : Machine
     [SerializeField] public UnityEvent ConsoleButtonPressed;
 
     // Update is called once per frame
-    void Update()
+    public void Interact()
     {
-        if (helpText.enabled && Input.GetButtonDown("Interact"))
-        {
-            ConsoleButtonPressed.Invoke();
-        }
+        ConsoleButtonPressed.Invoke();
     }
 
     public void ChangeConsoleButton(bool enabled)
