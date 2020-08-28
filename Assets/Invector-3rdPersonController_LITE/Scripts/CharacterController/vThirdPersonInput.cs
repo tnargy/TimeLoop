@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using Photon.Pun;
+using GandyLabs.TimeLoop;
 
 namespace Invector.vCharacterController
 {
@@ -73,7 +74,7 @@ namespace Invector.vCharacterController
                     return;
                 if (tpCamera)
                 {
-                    tpCamera.SetMainTarget(this.transform);
+                    tpCamera.SetMainTarget(PlayerController.LocalPlayerInstance.transform);
                     tpCamera.Init();
                 }
             }

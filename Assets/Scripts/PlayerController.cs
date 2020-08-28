@@ -18,7 +18,7 @@ namespace GandyLabs.TimeLoop
 
         private void Start()
         {
-            CameraWork _cameraWork = GetComponent<CameraWork>();
+            /*CameraWork _cameraWork = GetComponent<CameraWork>();
 
             if (_cameraWork != null)
             {
@@ -30,13 +30,13 @@ namespace GandyLabs.TimeLoop
             else
             {
                 Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
-            }
+            }*/
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (closeMachine != null && Input.GetButtonDown("Interact") && photonView.IsMine)
+            if (closeMachine != null && Input.GetButtonUp("Interact") && photonView.IsMine)
             {
                 closeMachine.SendMessage("Interact");
                 GetComponentInChildren<GhostController>().AddInteract(closeMachine.gameObject);
