@@ -20,7 +20,7 @@ namespace Invector.vCharacterController
         public string rotateCameraYInput = "Mouse Y";
 
         [HideInInspector] public vThirdPersonController cc;
-        [HideInInspector] public vThirdPersonCamera tpCamera;
+        // [HideInInspector] public vThirdPersonCamera tpCamera;
         [HideInInspector] public Camera cameraMain;
 
         #endregion
@@ -65,6 +65,7 @@ namespace Invector.vCharacterController
                 cc.Init();
         }
 
+        /**
         protected virtual void InitializeTpCamera()
         {
             if (tpCamera == null)
@@ -79,6 +80,7 @@ namespace Invector.vCharacterController
                 }
             }
         }
+        **/
 
         protected virtual void InputHandle()
         {
@@ -95,6 +97,7 @@ namespace Invector.vCharacterController
             cc.input.z = Input.GetAxis(verticallInput);
         }
 
+        /**
         protected virtual void CameraInput()
         {
             if (!cameraMain)
@@ -120,6 +123,7 @@ namespace Invector.vCharacterController
 
             tpCamera.RotateCamera(X, Y);
         }
+        **/
 
         protected virtual void StrafeInput()
         {

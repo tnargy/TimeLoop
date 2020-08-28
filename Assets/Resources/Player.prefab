@@ -1934,7 +1934,6 @@ MonoBehaviour:
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   cc: {fileID: 0}
-  tpCamera: {fileID: 0}
   cameraMain: {fileID: 0}
 --- !u!54 &34480273573397982
 Rigidbody:
