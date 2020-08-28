@@ -20,7 +20,7 @@ namespace Invector.vCharacterController
         public string rotateCameraYInput = "Mouse Y";
 
         [HideInInspector] public vThirdPersonController cc;
-        // [HideInInspector] public vThirdPersonCamera tpCamera;
+        [HideInInspector] public vThirdPersonCamera tpCamera;
         [HideInInspector] public Camera cameraMain;
 
         #endregion
@@ -28,7 +28,7 @@ namespace Invector.vCharacterController
         protected virtual void Start()
         {
             InitilizeController();
-            // InitializeTpCamera();
+            InitializeTpCamera();
         }
 
         protected virtual void FixedUpdate()
@@ -42,7 +42,6 @@ namespace Invector.vCharacterController
         {
             if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
             {
-                Debug.Log($"photonView.IsMine: {photonView.IsMine}");
                 return;
             }    
 
@@ -65,7 +64,6 @@ namespace Invector.vCharacterController
                 cc.Init();
         }
 
-        /**
         protected virtual void InitializeTpCamera()
         {
             if (tpCamera == null)
@@ -80,12 +78,11 @@ namespace Invector.vCharacterController
                 }
             }
         }
-        **/
 
         protected virtual void InputHandle()
         {
             MoveInput();
-            // CameraInput();
+            CameraInput();
             SprintInput();
             StrafeInput();
             JumpInput();
@@ -97,7 +94,6 @@ namespace Invector.vCharacterController
             cc.input.z = Input.GetAxis(verticallInput);
         }
 
-        /**
         protected virtual void CameraInput()
         {
             if (!cameraMain)
@@ -123,7 +119,6 @@ namespace Invector.vCharacterController
 
             tpCamera.RotateCamera(X, Y);
         }
-        **/
 
         protected virtual void StrafeInput()
         {
