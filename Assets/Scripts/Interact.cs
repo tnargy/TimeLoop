@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class Interact : Action
+namespace GandyLabs.TimeLoop
 {
-    GameObject target;
-
-    public Interact(GameObject target)
+    public class Interact : Action
     {
-        this.target = target;
-    }
+        GameObject target;
 
-    public override void Execute()
-    {
-        target.GetComponent<Console>().ConsoleButtonPressed.Invoke();
+        public Interact(GameObject target)
+        {
+            this.target = target;
+        }
+
+        public override void Execute()
+        {
+            target.GetComponent<Console>().ConsoleButtonPressed.Invoke();
+        }
     }
 }

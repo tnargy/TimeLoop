@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 
+using Photon.Pun;
+
 namespace Invector.vCharacterController
 {
-    public class vThirdPersonInput : MonoBehaviour
+    public class vThirdPersonInput : MonoBehaviourPun
     {
         #region Variables       
 
@@ -26,7 +28,7 @@ namespace Invector.vCharacterController
         protected virtual void Start()
         {
             InitilizeController();
-            InitializeTpCamera();
+            // InitializeTpCamera();
         }
 
         protected virtual void FixedUpdate()
@@ -38,6 +40,12 @@ namespace Invector.vCharacterController
 
         protected virtual void Update()
         {
+            if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+            {
+                Debug.Log($"photonView.IsMine: {photonView.IsMine}");
+                return;
+            }    
+
             InputHandle();                  // update the input methods
             cc.UpdateAnimator();            // updates the Animator Parameters
         }
@@ -75,7 +83,7 @@ namespace Invector.vCharacterController
         protected virtual void InputHandle()
         {
             MoveInput();
-            CameraInput();
+            // CameraInput();
             SprintInput();
             StrafeInput();
             JumpInput();

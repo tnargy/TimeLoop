@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class Trophy : MonoBehaviour
+namespace GandyLabs.TimeLoop
 {
-    [SerializeField] public UnityEvent CollectTrophy;
-
-    private void OnEnable()
+    public class Trophy : MonoBehaviour
     {
-        GameObject.FindGameObjectWithTag("Goal").GetComponent<SpawnExit>().DisableExit();
-    }
+        [SerializeField] public UnityEvent CollectTrophy;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private void OnEnable()
         {
-            CollectTrophy.Invoke();
-            transform.GetComponent<MeshRenderer>().enabled = false;
-            transform.SetParent(other.transform);
+            GameObject.FindGameObjectWithTag("Goal").GetComponent<SpawnExit>().DisableExit();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                CollectTrophy.Invoke();
+                transform.GetComponent<MeshRenderer>().enabled = false;
+                transform.SetParent(other.transform);
+            }
         }
     }
 }

@@ -1818,6 +1818,10 @@ GameObject:
   - component: {fileID: 34480273573397982}
   - component: {fileID: 8265737280178351499}
   - component: {fileID: 1368869856}
+  - component: {fileID: 8337284172681017932}
+  - component: {fileID: 3435501537055640456}
+  - component: {fileID: 2242751980125764123}
+  - component: {fileID: 7265143315829350307}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1975,6 +1979,101 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closeMachine: {fileID: 0}
+--- !u!114 &8337284172681017932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162225273732712211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3435501537055640456}
+  - {fileID: 2242751980125764123}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3435501537055640456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162225273732712211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &2242751980125764123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162225273732712211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 0
+    Name: InputHorizontal
+  - Type: 1
+    SynchronizeType: 0
+    Name: InputVertical
+  - Type: 1
+    SynchronizeType: 0
+    Name: InputMagnitude
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsGrounded
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsStrafing
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsSprinting
+  - Type: 1
+    SynchronizeType: 0
+    Name: GroundDistance
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
+--- !u!114 &7265143315829350307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162225273732712211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f686aa2f251415438b44125ea8ac81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 3
+  height: 2
+  centerOffset: {x: 0, y: 1, z: 0}
+  followOnStart: 0
+  smoothSpeed: 0.125
 --- !u!1 &5174395349493109491
 GameObject:
   m_ObjectHideFlags: 0

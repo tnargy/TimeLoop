@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class TimeMachine : Machine
+namespace GandyLabs.TimeLoop
 {
-    // [SerializeField] public UnityEvent ThruSpaceAndTime;
-
-    public void Interact()
+    public class TimeMachine : Machine
     {
-        // ThruSpaceAndTime.Invoke();
+        // [SerializeField] public UnityEvent ThruSpaceAndTime;
+
+        public void Interact()
+        {
+            // ThruSpaceAndTime.Invoke();
+        }
     }
 }

@@ -2,94 +2,97 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MovingPlatform : MonoBehaviour
+namespace GandyLabs.TimeLoop
 {
-    GameObject player;
-    Vector3 current_target;
-    int waypointIndex;
-    
-    public Vector3[] Waypoints;
-    public bool Automatic;
-    public float moveSpeed, tolerance;
-    [SerializeField] public UnityEvent ReachedTarget;
-
-    void Start()
+    public class MovingPlatform : MonoBehaviour
     {
-        if (Waypoints == null || Waypoints.Length == 0)
-        {
-            Waypoints = new Vector3[1] { new Vector3(transform.position.x, transform.position.y, transform.position.z) };
-        }
+        GameObject player;
+        Vector3 current_target;
+        int waypointIndex;
 
-        current_target = Waypoints[waypointIndex];
-        tolerance = moveSpeed * Time.deltaTime;
-    }
+        public Vector3[] Waypoints;
+        public bool Automatic;
+        public float moveSpeed, tolerance;
+        [SerializeField] public UnityEvent ReachedTarget;
 
-    void FixedUpdate()
-    {
-        if (transform.position != current_target)
+        void Start()
         {
-            if (player != null)
+            if (Waypoints == null || Waypoints.Length == 0)
             {
-                player.GetComponent<vThirdPersonController>().useRootMotion = true;
+                Waypoints = new Vector3[1] { new Vector3(transform.position.x, transform.position.y, transform.position.z) };
             }
 
-            MovePlatform();
+            current_target = Waypoints[waypointIndex];
+            tolerance = moveSpeed * Time.deltaTime;
         }
-        else
+
+        void FixedUpdate()
         {
-            if (player != null)
+            if (transform.position != current_target)
             {
-                player.GetComponent<vThirdPersonController>().useRootMotion = false;
+                if (player != null)
+                {
+                    player.GetComponent<vThirdPersonController>().useRootMotion = true;
+                }
+
+                MovePlatform();
             }
+            else
+            {
+                if (player != null)
+                {
+                    player.GetComponent<vThirdPersonController>().useRootMotion = false;
+                }
 
-            ReachedTarget.Invoke();
+                ReachedTarget.Invoke();
+            }
         }
-    }
 
-    private void MovePlatform()
-    {
-
-        Vector3 heading = current_target - transform.position;
-        transform.position += (heading / heading.magnitude) * moveSpeed * Time.deltaTime;
-        if (heading.magnitude < tolerance)
+        private void MovePlatform()
         {
-            transform.position = current_target;
-        }
-    }
-    private void UpdateTarget()
-    {
-        if (Automatic)
-        {
-            NextPlatform();
-        }
-    }
 
-    public void NextPlatform()
-    {
-        waypointIndex = (waypointIndex + 1) % Waypoints.Length;
-        current_target = Waypoints[waypointIndex];
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            other.transform.parent = transform;
-            player = other.gameObject;
+            Vector3 heading = current_target - transform.position;
+            transform.position += heading / heading.magnitude * moveSpeed * Time.deltaTime;
+            if (heading.magnitude < tolerance)
+            {
+                transform.position = current_target;
+            }
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private void UpdateTarget()
         {
-            other.transform.parent = null;
-            player = null;
+            if (Automatic)
+            {
+                NextPlatform();
+            }
         }
-    }
 
-    public void StartMovingPlatform(bool move)
-    {
-        Automatic = move;
-        UpdateTarget();
+        public void NextPlatform()
+        {
+            waypointIndex = (waypointIndex + 1) % Waypoints.Length;
+            current_target = Waypoints[waypointIndex];
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                other.transform.parent = transform;
+                player = other.gameObject;
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                other.transform.parent = null;
+                player = null;
+            }
+        }
+
+        public void StartMovingPlatform(bool move)
+        {
+            Automatic = move;
+            UpdateTarget();
+        }
     }
 }

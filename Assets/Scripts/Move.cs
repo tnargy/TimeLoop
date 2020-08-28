@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class Move : Action
+namespace GandyLabs.TimeLoop
 {
-    Vector3 destination;
-    Quaternion rotation;
-
-    public Move(Vector3 destination, Quaternion rotation)
+    public class Move : Action
     {
-        this.destination = destination;
-        this.rotation = rotation;
-    }
+        Vector3 destination;
+        Quaternion rotation;
 
-    public override void Execute()
-    {
-        player.transform.SetPositionAndRotation(destination, rotation);
+        public Move(Vector3 destination, Quaternion rotation)
+        {
+            this.destination = destination;
+            this.rotation = rotation;
+        }
+
+        public override void Execute()
+        {
+            player.transform.SetPositionAndRotation(destination, rotation);
+        }
     }
 }

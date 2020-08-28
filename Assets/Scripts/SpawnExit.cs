@@ -1,26 +1,39 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
-public class SpawnExit : MonoBehaviour
+namespace GandyLabs.TimeLoop
 {
-    public TextMeshProUGUI Announcement;
-    private Color defaultColor = Color.white;
-
-    public void EnableExit()
+    public class SpawnExit : MonoBehaviour
     {
-        transform.GetComponent<CapsuleCollider>().enabled = true;
-        transform.GetComponent<MeshRenderer>().material.color = Color.blue;
-    }
+        public TextMeshProUGUI Announcement;
+        private Color defaultColor = Color.white;
 
-    public void DisableExit()
-    {
-        transform.GetComponent<CapsuleCollider>().enabled = false;
-        transform.GetComponent<MeshRenderer>().material.color = defaultColor;
-    }
+        public void EnableExit()
+        {
+            transform.GetComponent<CapsuleCollider>().enabled = true;
+            transform.GetComponent<MeshRenderer>().material.color = Color.blue;
+        }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && other.transform.Find("Trophy") != null)
-            Debug.Log("Game Over");       
+        public void DisableExit()
+        {
+            transform.GetComponent<CapsuleCollider>().enabled = false;
+            transform.GetComponent<MeshRenderer>().material.color = defaultColor;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player") && other.transform.Find("Trophy") != null)
+            {
+                StartCoroutine(GameOver());
+            }
+        }
+
+        IEnumerator GameOver()
+        {
+            Announcement.GetComponent<MeshRenderer>().enabled = true;
+            yield return new WaitForSeconds(5);
+            GameManager.Instance.LeaveRoom();
+        }
     }
 }

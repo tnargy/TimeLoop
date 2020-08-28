@@ -1,23 +1,27 @@
-﻿using UnityEngine;
+﻿using GandyLabs.TimeLoop;
+using UnityEngine;
 
-public class Machine : MonoBehaviour
+namespace GandyLabs.TimeLoop
 {
-    public MeshRenderer helpText;
+    public class Machine : MonoBehaviour
+    {
+        public MeshRenderer helpText;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private void OnTriggerEnter(Collider other)
         {
-            helpText.enabled = true;
-            other.GetComponent<PlayerController>().closeMachine = this;
+            if (other.CompareTag("Player"))
+            {
+                helpText.enabled = true;
+                other.GetComponent<PlayerController>().closeMachine = this;
+            }
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private void OnTriggerExit(Collider other)
         {
-            helpText.enabled = false;
-            other.GetComponent<PlayerController>().closeMachine = null;
+            if (other.CompareTag("Player"))
+            {
+                helpText.enabled = false;
+                other.GetComponent<PlayerController>().closeMachine = null;
+            }
         }
     }
 }

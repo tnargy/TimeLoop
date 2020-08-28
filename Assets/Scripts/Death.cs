@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
 
-public class Death : MonoBehaviour
+namespace GandyLabs.TimeLoop
 {
-    private void OnTriggerEnter(Collider other)
+    public class Death : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        private void OnTriggerEnter(Collider other)
         {
-            Respawn(other.gameObject);
+            if (other.CompareTag("Player"))
+            {
+                Respawn(other.gameObject);
+            }
         }
-    }
 
-    public static void Respawn(GameObject player)
-    {
-        GameObject spawnLocation = GameObject.Find("Spawn Point");
-        player.SetActive(false);
-        player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
-        player.SetActive(true);
-
-        Transform trophy = player.transform.Find("Trophy");
-        if (trophy != null)
+        public static void Respawn(GameObject player)
         {
-            GameObject goalLocation = GameObject.Find("Goal Spawn");
-            trophy.SetParent(null);
-            trophy.GetComponent<MeshRenderer>().enabled = true;
-            trophy.position = goalLocation.transform.position;
+            GameObject spawnLocation = GameObject.Find("Spawn Point");
+            player.SetActive(false);
+            player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
+            player.SetActive(true);
+
+            Transform trophy = player.transform.Find("Trophy");
+            if (trophy != null)
+            {
+                GameObject goalLocation = GameObject.Find("Goal Spawn");
+                trophy.SetParent(null);
+                trophy.GetComponent<MeshRenderer>().enabled = true;
+                trophy.position = goalLocation.transform.position;
+            }
         }
     }
 }

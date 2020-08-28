@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace GandyLabs.TimeLoop
 {
-
     public class Launcher : MonoBehaviourPunCallbacks
     {
         #region Private Serializable Fields
@@ -18,6 +17,7 @@ namespace GandyLabs.TimeLoop
         #region Private Fields
 
         string gameVersion = "1";
+        bool isConnecting;
 
         #endregion
 
@@ -39,11 +39,15 @@ namespace GandyLabs.TimeLoop
         public override void OnConnectedToMaster()
         {
             Debug.Log($"We are connected to the { PhotonNetwork.CloudRegion} server!");
-            
+
             // #Critical
             // The first we try to do is to join a potential existing room. 
             // If there is, good, else, we'll be called back with OnJoinRandomFailed()
-            PhotonNetwork.JoinRandomRoom();
+            if (isConnecting)
+            {
+                PhotonNetwork.JoinRandomRoom();
+                isConnecting = false;
+            }
         }
 
         public override void OnDisconnected(DisconnectCause cause)
@@ -63,6 +67,11 @@ namespace GandyLabs.TimeLoop
         public override void OnJoinedRoom()
         {
             Debug.Log("Now this client is in a room.");
+
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            {
+                PhotonNetwork.LoadLevel("_SCENE_");
+            }
         }
 
         #endregion
@@ -89,7 +98,7 @@ namespace GandyLabs.TimeLoop
             }
             else
             {
-                PhotonNetwork.ConnectUsingSettings();
+                isConnecting = PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = gameVersion;
             }
         }

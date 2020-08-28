@@ -1,18 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Ghost
+namespace GandyLabs.TimeLoop
 {
-    public GameObject player;
-    public List<Action> actions;
-
-    public Ghost(GameObject player, List<Action> actions)
+    public struct Ghost
     {
-        this.player = player;
-        this.actions = new List<Action>();
-        foreach (var a in actions)
+        public GameObject player;
+        public List<Action> actions;
+
+        public Ghost(GameObject player, List<Action> actions)
         {
-            this.actions.Add(a);
+            this.player = player;
+            this.actions = new List<Action>();
+            foreach (var a in actions)
+            {
+                this.actions.Add(a);
+            }
         }
     }
 }
