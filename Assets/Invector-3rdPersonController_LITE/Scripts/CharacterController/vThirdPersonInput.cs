@@ -34,6 +34,8 @@ namespace Invector.vCharacterController
 
         protected virtual void FixedUpdate()
         {
+            if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+
             cc.UpdateMotor();               // updates the ThirdPersonMotor methods
             cc.ControlLocomotionType();     // handle the controller locomotion type and movespeed
             cc.ControlRotationType();       // handle the controller rotation type
@@ -41,10 +43,7 @@ namespace Invector.vCharacterController
 
         protected virtual void Update()
         {
-            if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
-            {
-                return;
-            }    
+            if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
             InputHandle();                  // update the input methods
             cc.UpdateAnimator();            // updates the Animator Parameters
@@ -75,7 +74,6 @@ namespace Invector.vCharacterController
                 if (tpCamera)
                 {
                     tpCamera.SetMainTarget(PlayerController.LocalPlayerInstance.transform);
-                    tpCamera.Init();
                 }
             }
         }
@@ -111,7 +109,7 @@ namespace Invector.vCharacterController
             {
                 cc.UpdateMoveDirection(cameraMain.transform);
             }
-
+            
             if (tpCamera == null)
                 return;
 

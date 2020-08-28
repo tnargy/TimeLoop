@@ -52,8 +52,10 @@ namespace GandyLabs.TimeLoop
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            progressLabel.SetActive(false);
-            controlPanel.SetActive(true);
+            if (progressLabel != null)
+                progressLabel.SetActive(false);
+            if (controlPanel != null)
+                controlPanel.SetActive(true);
 
             Debug.LogWarning($"Disconnected due to: {cause}");
         }
