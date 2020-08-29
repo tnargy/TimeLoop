@@ -30,6 +30,7 @@ namespace GandyLabs.TimeLoop
             }
         }
 
+        [PunRPC]
         public void GameOver()
         {
             Announcement.enabled = true;
@@ -43,7 +44,6 @@ namespace GandyLabs.TimeLoop
             StartCoroutine(End(5f));
         }
 
-        [PunRPC]
         public void RPC_GameOver() => photonView.RPC("GameOver", RpcTarget.AllBuffered);
 
         IEnumerator End(float seconds)

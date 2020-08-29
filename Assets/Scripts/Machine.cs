@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace GandyLabs.TimeLoop
 {
-    public class Machine : MonoBehaviour
+    public class Machine : MonoBehaviourPun
     {
         public MeshRenderer helpText;
 

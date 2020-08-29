@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace GandyLabs.TimeLoop
@@ -13,6 +14,7 @@ namespace GandyLabs.TimeLoop
             ConsoleButtonPressed.Invoke();
         }
 
+        [PunRPC]
         public void ChangeConsoleButton(bool enabled)
         {
             if (enabled)
@@ -20,5 +22,7 @@ namespace GandyLabs.TimeLoop
             else
                 transform.Find("Console Button").GetComponent<MeshRenderer>().material.color = Color.red;
         }
+
+        public void RPC_ChangeConsoleButton(bool enabled) => photonView.RPC("ChangeConsoleButton", RpcTarget.All, enabled);
     }
 }
