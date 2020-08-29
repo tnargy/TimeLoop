@@ -28,7 +28,7 @@ namespace GandyLabs.TimeLoop
         void Update()
         {
             pollTime += Time.deltaTime;
-            if (Vector3.Distance(playerRB.position, lastRecordedPosition) > 0.1f || playerRB.rotation != lastRecordedRotation)
+            if (Vector3.Distance(playerRB.position, lastRecordedPosition) > 0.01f || playerRB.rotation != lastRecordedRotation)
             {
                 var move = new Move(playerRB.position, playerRB.rotation)
                 {
