@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
 namespace GandyLabs.TimeLoop
 {
-    public class GhostController : MonoBehaviour
+    public class GhostController : MonoBehaviourPun
     {
         List<Action> actions;
         List<Ghost> ghosts;
@@ -93,8 +94,9 @@ namespace GandyLabs.TimeLoop
         private Ghost SpawnGhost(List<Action> actions)
         {
             GameObject spawnLocation = GameObject.Find("Spawn Point");
-            var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"), transform.parent);
-            ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
+            // var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"), transform.parent);
+            // ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
+            var ghostObj = PhotonNetwork.Instantiate("Ghost", spawnLocation.transform.position, spawnLocation.transform.rotation, 0);
             for (int i = 0; i < actions.Count; i++)
             {
                 var action = actions[i];

@@ -33,16 +33,11 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - ChangeConsoleButton
   - ClickRpc
   - DestroyRpc
-  - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
-  - StartMovingPlatform
-  - RPC_GameOver
-  - RPC_ChangeConsoleButton
-  - ChangeConsoleButton
   - GameOver
+  - StartMovingPlatform
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
