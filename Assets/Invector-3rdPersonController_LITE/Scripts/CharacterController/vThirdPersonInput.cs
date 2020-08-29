@@ -43,8 +43,6 @@ namespace Invector.vCharacterController
 
         protected virtual void Update()
         {
-            if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
-
             InputHandle();                  // update the input methods
             cc.UpdateAnimator();            // updates the Animator Parameters
         }
@@ -80,11 +78,14 @@ namespace Invector.vCharacterController
 
         protected virtual void InputHandle()
         {
-            MoveInput();
+            if (photonView.IsMine)
+            {
+                MoveInput();
+                SprintInput();
+                StrafeInput();
+                JumpInput();
+            }
             CameraInput();
-            SprintInput();
-            StrafeInput();
-            JumpInput();
         }
 
         public virtual void MoveInput()
