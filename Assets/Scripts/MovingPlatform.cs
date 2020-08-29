@@ -1,10 +1,11 @@
 ﻿using Invector.vCharacterController;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace GandyLabs.TimeLoop
 {
-    public class MovingPlatform : MonoBehaviour
+    public class MovingPlatform : MonoBehaviourPun
     {
         GameObject player;
         Vector3 current_target;
@@ -88,11 +89,13 @@ namespace GandyLabs.TimeLoop
                 player = null;
             }
         }
-
+        [PunRPC]
         public void StartMovingPlatform(bool move)
         {
             Automatic = move;
             UpdateTarget();
         }
+
+        public void RPC_StartMovingPlatform(bool move) => photonView.RPC("StartMovingPlatform", RpcTarget.All, move);
     }
 }

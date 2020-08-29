@@ -38,6 +38,9 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - StartMovingPlatform
+  - RPC_GameOver
+  - RPC_ChangeConsoleButton
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

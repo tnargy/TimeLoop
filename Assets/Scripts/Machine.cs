@@ -1,5 +1,4 @@
-﻿using GandyLabs.TimeLoop;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GandyLabs.TimeLoop
 {
