@@ -72,7 +72,7 @@ namespace GandyLabs.TimeLoop
 
             if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             {
-                PhotonNetwork.LoadLevel("_SCENE_");
+                PhotonNetwork.LoadLevel("Soccer");
             }
         }
 

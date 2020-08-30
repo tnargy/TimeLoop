@@ -25,7 +25,8 @@ namespace GandyLabs.TimeLoop
                 {
                     Debug.Log($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
                     GameObject spawnLocation = GameObject.Find("Spawn Point");
-                    PhotonNetwork.Instantiate(playerPrefab.name, spawnLocation.transform.position, spawnLocation.transform.rotation, 0);
+                    //PhotonNetwork.Instantiate(playerPrefab.name, spawnLocation.transform.position, spawnLocation.transform.rotation, 0);
+                    Instantiate(playerPrefab, spawnLocation.transform.position, spawnLocation.transform.rotation);
                 }
                 else
                     Debug.Log($"Ignoring scene load for {SceneManagerHelper.ActiveSceneName}");
@@ -85,7 +86,7 @@ namespace GandyLabs.TimeLoop
                 Debug.LogError("Trying to Load a level but we are not the master Client");
             }
             Debug.Log($"Loading level... Player Count: {PhotonNetwork.CurrentRoom.PlayerCount}");
-            PhotonNetwork.LoadLevel("_SCENE_");
+            PhotonNetwork.LoadLevel("Soccer");
         }
 
         #endregion
