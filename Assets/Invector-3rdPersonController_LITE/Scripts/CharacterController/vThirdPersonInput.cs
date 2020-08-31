@@ -78,7 +78,7 @@ namespace Invector.vCharacterController
 
         protected virtual void InputHandle()
         {
-            if (photonView.IsMine)
+            if (photonView.IsMine || !PhotonNetwork.IsConnected)
             {
                 MoveInput();
                 SprintInput();

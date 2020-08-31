@@ -10,7 +10,7 @@ namespace GandyLabs.TimeLoop
 
         private void Awake()
         {
-            if (photonView.IsMine)
+            if (photonView.IsMine || !PhotonNetwork.IsConnected)
                 PlayerController.LocalPlayerInstance = gameObject;
 
             DontDestroyOnLoad(gameObject);

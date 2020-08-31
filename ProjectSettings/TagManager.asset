@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Goal
   - Ghost
+  - Ball
+  - Wall
   layers:
   - Default
   - TransparentFX
