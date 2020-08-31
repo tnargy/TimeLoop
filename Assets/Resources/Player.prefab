@@ -1978,6 +1978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closeMachine: {fileID: 0}
+  spawnLocation: {fileID: 0}
 --- !u!114 &8337284172681017932
 MonoBehaviour:
   m_ObjectHideFlags: 0

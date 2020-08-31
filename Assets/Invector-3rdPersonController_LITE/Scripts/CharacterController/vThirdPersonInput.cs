@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-
+﻿using GandyLabs.TimeLoop;
 using Photon.Pun;
-using GandyLabs.TimeLoop;
+using UnityEngine;
 
 namespace Invector.vCharacterController
 {
@@ -110,7 +109,7 @@ namespace Invector.vCharacterController
             {
                 cc.UpdateMoveDirection(cameraMain.transform);
             }
-            
+
             if (tpCamera == null)
                 return;
 

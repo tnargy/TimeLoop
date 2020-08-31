@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Launcher.unity
     guid: 4ed7588491661c7429fe0f2fb5c20eef
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_SCENE_.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Soccer.unity
+    guid: 0f00e87bf2ecf504e8bf5fd413650da0
   m_configObjects: {}

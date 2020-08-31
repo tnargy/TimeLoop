@@ -8,15 +8,11 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using System;
 using UnityEditor;
 using UnityEngine;
-
-using Photon.Pun;
-
-using ExitGames.Client.Photon;
-using System.Collections.Generic;
-using System.Reflection;
 
 [CustomEditor(typeof(ServerSettings))]
 public class ServerSettingsInspector : Editor

@@ -88,7 +88,7 @@ namespace GandyLabs.TimeLoop
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
         [SerializeField]
         private GameObject progressLabel;
-        
+
         public void Connect()
         {
             progressLabel.SetActive(true);

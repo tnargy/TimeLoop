@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
-
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-using Photon.Pun;
-using Photon.Realtime;
 
 namespace GandyLabs.TimeLoop
 {
@@ -17,6 +16,12 @@ namespace GandyLabs.TimeLoop
         {
             Instance = this;
 
+            spawnLocations = new Queue<Transform>();
+            foreach (var spawn in GameObject.FindGameObjectsWithTag("Respawn"))
+            {
+                spawnLocations.Enqueue(spawn.transform);
+            }
+
             if (playerPrefab == null)
                 Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'", this);
             else
@@ -24,9 +29,10 @@ namespace GandyLabs.TimeLoop
                 if (PlayerController.LocalPlayerInstance == null)
                 {
                     Debug.Log($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
-                    GameObject spawnLocation = GameObject.Find("Spawn Point");
-                    //PhotonNetwork.Instantiate(playerPrefab.name, spawnLocation.transform.position, spawnLocation.transform.rotation, 0);
-                    Instantiate(playerPrefab, spawnLocation.transform.position, spawnLocation.transform.rotation);
+                    // var player = PhotonNetwork.Instantiate(playerPrefab.name, spawnLocations.Peek().position, spawnLocations.Peek().rotation, 0);
+                    var player = Instantiate(playerPrefab, spawnLocations.Peek().position, spawnLocations.Peek().rotation);
+
+                    playerList.Add(player);
                 }
                 else
                     Debug.Log($"Ignoring scene load for {SceneManagerHelper.ActiveSceneName}");
@@ -67,17 +73,62 @@ namespace GandyLabs.TimeLoop
         #region Public Methods
 
         public static GameManager Instance;
+
         [Tooltip("The prefab to use for representing the player")]
         public GameObject playerPrefab;
+        public Queue<Transform> spawnLocations;
 
         public void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
         }
 
+        /// <summary>
+        /// When ball enters net, score is called
+        /// </summary>
+        /// <param name="net">Name of gameobject Net or Net(1)</param>
+        public void Score(string net)
+        {
+            foreach (var player in playerList)
+            {
+                
+            }
+        }
+
+        [PunRPC]
+        public void GameOver(string msg)
+        {
+            Announcement.text = msg;
+            Announcement.enabled = true;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.DestroyAll();
+                PhotonNetwork.CurrentRoom.IsVisible = false;
+                PhotonNetwork.CurrentRoom.IsOpen = false;
+            }
+
+            StartCoroutine(End(5f));
+        }
+
+        public void RPC_GameOver()
+        {
+            photonView.RPC("GameOver", RpcTarget.OthersBuffered, "You Lose");
+        }
+
         #endregion
 
         #region Private Methods
+
+        private List<GameObject> playerList;
+        private TextMeshProUGUI Announcement;
+
+        IEnumerator End(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+
+            PhotonNetwork.AutomaticallySyncScene = false;
+            PhotonNetwork.LeaveRoom();
+        }
 
         void LoadArena()
         {

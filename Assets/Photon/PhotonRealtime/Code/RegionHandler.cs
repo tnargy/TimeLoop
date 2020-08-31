@@ -29,14 +29,13 @@ namespace Photon.Realtime
     using System.Diagnostics;
     using ExitGames.Client.Photon;
 
-    #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
     using UnityEngine;
     using Debug = UnityEngine.Debug;
-    #endif
-    #if SUPPORTED_UNITY || NETFX_CORE
-    using Hashtable = ExitGames.Client.Photon.Hashtable;
+#endif
+#if SUPPORTED_UNITY || NETFX_CORE
     using SupportClass = ExitGames.Client.Photon.SupportClass;
-    #endif
+#endif
 
     /// <summary>
     /// Provides methods to work with Photon's regions (Photon Cloud) and can be use to find the one with best ping.
@@ -86,7 +85,7 @@ namespace Photon.Realtime
                     return this.bestRegionCache;
                 }
 
-                this.EnabledRegions.Sort((a, b) => a.Ping.CompareTo(b.Ping) );
+                this.EnabledRegions.Sort((a, b) => a.Ping.CompareTo(b.Ping));
 
                 this.bestRegionCache = this.EnabledRegions[0];
                 return this.bestRegionCache;
@@ -104,11 +103,12 @@ namespace Photon.Realtime
         {
             get
             {
-				if (this.BestRegion != null) {
-					return this.BestRegion.Code + ";" + this.BestRegion.Ping + ";" + this.availableRegionCodes;
-				}
+                if (this.BestRegion != null)
+                {
+                    return this.BestRegion.Code + ";" + this.BestRegion.Ping + ";" + this.availableRegionCodes;
+                }
 
-				return this.availableRegionCodes;
+                return this.availableRegionCodes;
             }
         }
 
@@ -251,9 +251,9 @@ namespace Photon.Realtime
             {
                 this.IsPinging = false;
                 this.onCompleteCall(this);
-                #if PING_VIA_COROUTINE
+#if PING_VIA_COROUTINE
                 MonoBehaviourEmpty.SelfDestroy();
-                #endif
+#endif
             }
         }
 
@@ -291,9 +291,9 @@ namespace Photon.Realtime
 
             this.IsPinging = false;
             this.onCompleteCall(this);
-            #if PING_VIA_COROUTINE
+#if PING_VIA_COROUTINE
             MonoBehaviourEmpty.SelfDestroy();
-            #endif
+#endif
         }
     }
 
@@ -331,27 +331,27 @@ namespace Photon.Realtime
 
             // using each type explicitly in the conditional code, makes sure Unity doesn't strip the class / constructor.
 
-            #if !UNITY_EDITOR && NETFX_CORE
+#if !UNITY_EDITOR && NETFX_CORE
             if (RegionHandler.PingImplementation == null || RegionHandler.PingImplementation == typeof(PingWindowsStore))
             {
                 ping = new PingWindowsStore();
             }
-            #elif NATIVE_SOCKETS || NO_SOCKET
+#elif NATIVE_SOCKETS || NO_SOCKET
             if (RegionHandler.PingImplementation == null || RegionHandler.PingImplementation == typeof(PingNativeDynamic))
             {
                 ping = new PingNativeDynamic();
             }
-            #elif UNITY_WEBGL
+#elif UNITY_WEBGL
             if (RegionHandler.PingImplementation == null || RegionHandler.PingImplementation == typeof(PingHttp))
             {
                 ping = new PingHttp();
             }
-            #else
+#else
             if (RegionHandler.PingImplementation == null || RegionHandler.PingImplementation == typeof(PingMono))
             {
                 ping = new PingMono();
             }
-            #endif
+#endif
 
             if (ping == null)
             {
@@ -394,11 +394,11 @@ namespace Photon.Realtime
             this.rttResults = new List<int>(Attempts);
 
 
-            #if PING_VIA_COROUTINE
+#if PING_VIA_COROUTINE
             MonoBehaviourEmpty.Instance.StartCoroutine(this.RegionPingCoroutine());
-            #else
+#else
             bool queued = false;
-            #if !NETFX_CORE
+#if !NETFX_CORE
             try
             {
                 queued = ThreadPool.QueueUserWorkItem(this.RegionPingPooled);
@@ -407,12 +407,12 @@ namespace Photon.Realtime
             {
                 queued = false;
             }
-            #endif
+#endif
             if (!queued)
             {
                 SupportClass.StartBackgroundCalls(this.RegionPingThreaded, 0, "RegionPing_" + this.region.Code + "_" + this.region.Cluster);
             }
-            #endif
+#endif
 
 
             return true;
@@ -457,9 +457,9 @@ namespace Photon.Realtime
                         overtime = true;
                         break;
                     }
-                    #if !NETFX_CORE
+#if !NETFX_CORE
                     System.Threading.Thread.Sleep(0);
-                    #endif
+#endif
                 }
 
 
@@ -478,9 +478,9 @@ namespace Photon.Realtime
                     this.region.Ping = (int)((rttSum) / replyCount);
                 }
 
-                #if !NETFX_CORE
+#if !NETFX_CORE
                 System.Threading.Thread.Sleep(10);
-                #endif
+#endif
             }
 
             //Debug.Log("Done: "+ this.region.Code);
@@ -493,7 +493,7 @@ namespace Photon.Realtime
         }
 
 
-        #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
         /// <remarks>
         /// Affected by frame-rate of app, as this Coroutine checks the socket for a result once per frame.
         /// </remarks>
@@ -560,7 +560,7 @@ namespace Photon.Realtime
             this.onDoneCall(this.region);
             yield return null;
         }
-        #endif
+#endif
 
 
         public string GetResults()
@@ -580,22 +580,22 @@ namespace Photon.Realtime
         public static string ResolveHost(string hostName)
         {
 
-			if (hostName.StartsWith("wss://"))
-			{
-				hostName = hostName.Substring(6);
-			}
-			if (hostName.StartsWith("ws://"))
-			{
-				hostName = hostName.Substring(5);
-			}
+            if (hostName.StartsWith("wss://"))
+            {
+                hostName = hostName.Substring(6);
+            }
+            if (hostName.StartsWith("ws://"))
+            {
+                hostName = hostName.Substring(5);
+            }
 
             string ipv4Address = string.Empty;
 
             try
             {
-                #if UNITY_WSA || NETFX_CORE || UNITY_WEBGL
+#if UNITY_WSA || NETFX_CORE || UNITY_WEBGL
                 return hostName;
-                #else
+#else
 
                 IPAddress[] address = Dns.GetHostAddresses(hostName);
                 if (address.Length == 1)
@@ -620,7 +620,7 @@ namespace Photon.Realtime
                         }
                     }
                 }
-                #endif
+#endif
             }
             catch (System.Exception e)
             {
@@ -631,7 +631,7 @@ namespace Photon.Realtime
         }
     }
 
-    #if PING_VIA_COROUTINE
+#if PING_VIA_COROUTINE
     internal class MonoBehaviourEmpty : MonoBehaviour
     {
         private static bool instanceSet; // to avoid instance null check which may be incorrect
@@ -663,5 +663,5 @@ namespace Photon.Realtime
             }
         }
     }
-    #endif
+#endif
 }

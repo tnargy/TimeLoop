@@ -22,7 +22,7 @@ namespace GandyLabs.TimeLoop
                 trophy.GetComponent<MeshRenderer>().enabled = true;
                 trophy.position = goalLocation.transform.position;
             }
-            
+
             GameObject spawnLocation = GameObject.Find("Spawn Point");
             player.SetActive(false);
             player.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);

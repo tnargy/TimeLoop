@@ -58,8 +58,8 @@ namespace Photon.Pun
             }
         }
 
-        public static T GetNestedComponentInChildren<T, NestedT>(this Transform t, bool includeInactive) 
-            where T : class 
+        public static T GetNestedComponentInChildren<T, NestedT>(this Transform t, bool includeInactive)
+            where T : class
             where NestedT : class
         {
             // Look for the most obvious check first on the root.
@@ -142,9 +142,9 @@ namespace Photon.Pun
         /// <typeparam name="StopSearchOnT"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static T GetNestedComponentInParents<T, NestedT>(this Transform t) 
+        public static T GetNestedComponentInParents<T, NestedT>(this Transform t)
             where T : class
-            where NestedT: class
+            where NestedT : class
         {
             // First try root
             var found = t.GetComponent<T>();
@@ -162,7 +162,7 @@ namespace Photon.Pun
                     return found;
 
                 /// Stop climbing at the NetObj (this is how we detect nesting
-                if (!ReferenceEquals( par.GetComponent<NestedT>(), null))
+                if (!ReferenceEquals(par.GetComponent<NestedT>(), null))
                     return null;
 
                 par = par.parent;
@@ -324,9 +324,9 @@ namespace Photon.Pun
         /// <param name="includeInactive"></param>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static void GetNestedComponentsInChildren<T, SearchT, NestedT>(this Transform t, bool includeInactive, List<T> list) 
-            where T : class 
-            where SearchT : class 
+        public static void GetNestedComponentsInChildren<T, SearchT, NestedT>(this Transform t, bool includeInactive, List<T> list)
+            where T : class
+            where SearchT : class
         {
             list.Clear();
 

@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-
-namespace GandyLabs.TimeLoop
+﻿namespace GandyLabs.TimeLoop
 {
     public class TimeMachine : Machine
     {

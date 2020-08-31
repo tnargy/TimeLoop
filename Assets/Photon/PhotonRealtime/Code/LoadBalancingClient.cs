@@ -17,19 +17,16 @@
 namespace Photon.Realtime
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using ExitGames.Client.Photon;
 
-    #if SUPPORTED_UNITY
-    using UnityEngine;
+#if SUPPORTED_UNITY
     using Debug = UnityEngine.Debug;
-    #endif
-    #if SUPPORTED_UNITY || NETFX_CORE
+#endif
+#if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;
-    using SupportClass = ExitGames.Client.Photon.SupportClass;
-    #endif
+#endif
 
 
     #region Enums
@@ -718,13 +715,13 @@ namespace Photon.Realtime
             this.SerializationProtocol = SerializationProtocol.GpBinaryV18;
             this.LocalPlayer = this.CreatePlayer(string.Empty, -1, true, null); //TODO: Check if we can do this later
 
-            #if UNITY_WEBGL
+#if UNITY_WEBGL
             if (this.LoadBalancingPeer.TransportProtocol == ConnectionProtocol.Tcp || this.LoadBalancingPeer.TransportProtocol == ConnectionProtocol.Udp)
             {
                 this.LoadBalancingPeer.Listener.DebugReturn(DebugLevel.WARNING, "WebGL requires WebSockets. Switching TransportProtocol to WebSocketSecure.");
                 this.LoadBalancingPeer.TransportProtocol = ConnectionProtocol.WebSocketSecure;
             }
-            #endif
+#endif
 
             this.State = ClientState.PeerCreated;
         }
@@ -768,10 +765,10 @@ namespace Photon.Realtime
                 case ConnectionProtocol.Udp:
                 case ConnectionProtocol.Tcp:
                     return string.Format("{0}:{1}", NameServerHost, protocolPort);
-                #if RHTTP
+#if RHTTP
                 case ConnectionProtocol.RHttp:
                     return NameServerHttp;
-                #endif
+#endif
                 case ConnectionProtocol.WebSocket:
                     return string.Format("ws://{0}:{1}", NameServerHost, protocolPort);
                 case ConnectionProtocol.WebSocketSecure:
@@ -816,7 +813,7 @@ namespace Photon.Realtime
             this.connectToBestRegion = true;
             this.bestRegionSummaryFromStorage = appSettings.BestRegionSummaryFromStorage;
             this.DisconnectedCause = DisconnectCause.None;
-            
+
 
             this.CheckConnectSetupWebGl();
             this.CheckConnectSetupXboxOne(); // may throw an exception if there are issues that can not be corrected
@@ -890,7 +887,7 @@ namespace Photon.Realtime
                 // this is a workaround to use with version v4.0.29.11263 or lower, which doesn't support GpBinaryV18 yet.
                 this.SerializationProtocol = SerializationProtocol.GpBinaryV16;
             }
-            
+
 
             this.CheckConnectSetupWebGl();
             this.CheckConnectSetupXboxOne(); // may throw an exception if there are issues that can not be corrected
@@ -1205,7 +1202,7 @@ namespace Photon.Realtime
         /// <param name="simulateTimeout">If true, a connection loss is simulated. If false, the simulation ends.</param>
         public void SimulateConnectionLoss(bool simulateTimeout)
         {
-            this.DebugReturn(DebugLevel.WARNING, "SimulateConnectionLoss() set to: "+simulateTimeout);
+            this.DebugReturn(DebugLevel.WARNING, "SimulateConnectionLoss() set to: " + simulateTimeout);
 
             if (simulateTimeout)
             {
@@ -1233,7 +1230,7 @@ namespace Photon.Realtime
                     return false;
                 }
 
-                ConnectionProtocol targetProtocolPastNameServer = this.ExpectedProtocol != null ? (ConnectionProtocol) this.ExpectedProtocol : this.LoadBalancingPeer.TransportProtocol;
+                ConnectionProtocol targetProtocolPastNameServer = this.ExpectedProtocol != null ? (ConnectionProtocol)this.ExpectedProtocol : this.LoadBalancingPeer.TransportProtocol;
                 return this.LoadBalancingPeer.OpAuthenticateOnce(this.AppId, this.AppVersion, this.AuthValues, this.CloudRegion, this.EncryptionMode, targetProtocolPastNameServer);
             }
         }
@@ -2374,9 +2371,9 @@ namespace Photon.Realtime
             {
                 return;
             }
-            #if !SUPPORTED_UNITY
+#if !SUPPORTED_UNITY
             Debug.WriteLine(message);
-            #else
+#else
             if (level == DebugLevel.ERROR)
             {
                 Debug.LogError(message);
@@ -2393,7 +2390,7 @@ namespace Photon.Realtime
             {
                 Debug.Log(message);
             }
-            #endif
+#endif
         }
 
         private void CallbackRoomEnterFailed(OperationResponse operationResponse)
@@ -2567,7 +2564,7 @@ namespace Photon.Realtime
 
                             this.enterRoomParamsCache.OnGameServer = true;
 
-                            if (this.lastJoinType == JoinType.JoinRoom || this.lastJoinType == JoinType.JoinRandomRoom  || this.lastJoinType == JoinType.JoinRandomOrCreateRoom || this.lastJoinType == JoinType.JoinOrCreateRoom)
+                            if (this.lastJoinType == JoinType.JoinRoom || this.lastJoinType == JoinType.JoinRandomRoom || this.lastJoinType == JoinType.JoinRandomOrCreateRoom || this.lastJoinType == JoinType.JoinOrCreateRoom)
                             {
                                 this.LoadBalancingPeer.OpJoinRoom(this.enterRoomParamsCache);
                             }
@@ -2592,7 +2589,7 @@ namespace Photon.Realtime
 
                     if (operationResponse.ReturnCode == ErrorCode.InvalidAuthentication)
                     {
-                        this.DebugReturn(DebugLevel.ERROR, string.Format("GetRegions failed. AppId is unknown on the (cloud) server. "+operationResponse.DebugMessage));
+                        this.DebugReturn(DebugLevel.ERROR, string.Format("GetRegions failed. AppId is unknown on the (cloud) server. " + operationResponse.DebugMessage));
                         this.Disconnect(DisconnectCause.InvalidAuthentication);
                         break;
                     }
@@ -2887,9 +2884,9 @@ namespace Photon.Realtime
 
                         default:
                             string stacktrace = "";
-                            #if DEBUG && !NETFX_CORE
+#if DEBUG && !NETFX_CORE
                             stacktrace = new System.Diagnostics.StackTrace(true).ToString();
-                            #endif
+#endif
                             this.DebugReturn(DebugLevel.WARNING, "Got a unexpected Disconnect in LoadBalancingClient State: " + this.State + ". Server: " + this.Server + " Trace: " + stacktrace);
 
                             if (this.AuthValues != null)

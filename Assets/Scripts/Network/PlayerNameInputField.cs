@@ -1,11 +1,6 @@
-﻿using TMPro;
+﻿using Photon.Pun;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-
-using Photon.Pun;
-using Photon.Realtime;
-
-using System.Collections;
 
 namespace GandyLabs.TimeLoop
 {
@@ -25,13 +20,13 @@ namespace GandyLabs.TimeLoop
                 {
                     defaultName = PlayerPrefs.GetString(playerNamePrefKey);
                     _inputField.text = defaultName;
-                }    
+                }
             }
 
             PhotonNetwork.NickName = defaultName;
         }
 
-        
+
         public void SetPlayerName(string value)
         {
             if (string.IsNullOrEmpty(value))

@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
-using TMPro;
 using UnityEngine;
 
 namespace GandyLabs.TimeLoop

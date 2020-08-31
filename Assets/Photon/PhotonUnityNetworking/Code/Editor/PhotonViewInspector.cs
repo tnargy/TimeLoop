@@ -8,11 +8,10 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+using Photon.Realtime;
 using System;
 using UnityEditor;
 using UnityEngine;
-
-using Photon.Realtime;
 
 namespace Photon.Pun
 {
@@ -154,7 +153,7 @@ namespace Photon.Pun
                             }
                     }
                 }
-             }
+            }
 
             //GUILayout.Space(5);
 

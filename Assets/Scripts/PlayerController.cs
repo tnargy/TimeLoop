@@ -5,13 +5,17 @@ namespace GandyLabs.TimeLoop
 {
     public class PlayerController : MonoBehaviourPun
     {
-        public Machine closeMachine;
         public static GameObject LocalPlayerInstance;
+        public Machine closeMachine;
+        public Transform spawnLocation;
+        public string myNet;
 
         private void Awake()
         {
             if (photonView.IsMine || !PhotonNetwork.IsConnected)
                 PlayerController.LocalPlayerInstance = gameObject;
+
+            spawnLocation = GameManager.Instance.spawnLocations.Dequeue();
 
             DontDestroyOnLoad(gameObject);
         }
@@ -24,6 +28,11 @@ namespace GandyLabs.TimeLoop
                 closeMachine.SendMessage("Interact");
                 GetComponentInChildren<GhostController>().AddInteract(closeMachine.gameObject);
             }
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.Instance.spawnLocations.Enqueue(spawnLocation);
         }
     }
 }
