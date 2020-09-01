@@ -16,7 +16,7 @@ namespace GandyLabs.TimeLoop
 
         #region Private Fields
 
-        string gameVersion = "1";
+        string gameVersion = "2";
         bool isConnecting;
 
         #endregion
