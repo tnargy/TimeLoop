@@ -31,8 +31,8 @@ namespace GandyLabs.TimeLoop
                     Debug.Log($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
                     var spawn = spawnLocations.Peek();
                     var player =
-                    // PhotonNetwork.Instantiate(playerPrefab.name, spawn.position, spawn.rotation, 0);
-                    Instantiate(playerPrefab, spawn.position, spawn.rotation);
+                    PhotonNetwork.Instantiate(playerPrefab.name, spawn.position, spawn.rotation, 0);
+                    // Instantiate(playerPrefab, spawn.position, spawn.rotation);
                 }
                 else
                     Debug.Log($"Ignoring scene load for {SceneManagerHelper.ActiveSceneName}");
@@ -131,6 +131,14 @@ namespace GandyLabs.TimeLoop
         public void RPC_GameOver(string msg)
         {
             photonView.RPC("GameOver", RpcTarget.OthersBuffered, msg);
+        }
+
+        public static void Respawn(GameObject player)
+        {
+            Transform spawnLocation = player.GetComponent<PlayerController>().spawnLocation;
+            player.SetActive(false);
+            player.transform.SetPositionAndRotation(spawnLocation.position, spawnLocation.rotation);
+            player.SetActive(true);
         }
 
         #endregion

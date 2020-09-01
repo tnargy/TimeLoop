@@ -24,6 +24,11 @@ namespace GandyLabs.TimeLoop
             ghosts = new List<Ghost>();
         }
 
+        void OnEnable()
+        {
+            StartCoroutine(TimeWarp());
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -86,16 +91,33 @@ namespace GandyLabs.TimeLoop
                 ghosts.Add(SpawnGhost(actions));
                 playing = true;
                 actions.Clear();
-                Death.Respawn(transform.parent.gameObject);
+                GameManager.Respawn(transform.parent.gameObject);
+            }
+        }
+
+        IEnumerator TimeWarp()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(10f);
+                foreach (var ghost in ghosts)
+                {
+                    SpawnGhost(ghost.actions);
+                }
+                ghosts.Add(SpawnGhost(actions));
+                playing = true;
+                actions.Clear();
+                GameManager.Respawn(transform.parent.gameObject);
+                Ball.Reset();
             }
         }
 
         private Ghost SpawnGhost(List<Action> actions)
         {
-            GameObject spawnLocation = GameObject.Find("Spawn Point");
+            Transform spawnLocation = transform.parent.GetComponent<PlayerController>().spawnLocation;
             // var ghostObj = Instantiate((GameObject)Resources.Load("Ghost"), transform.parent);
-            // ghostObj.transform.SetPositionAndRotation(spawnLocation.transform.position, spawnLocation.transform.rotation);
-            var ghostObj = PhotonNetwork.Instantiate("Ghost", spawnLocation.transform.position, spawnLocation.transform.rotation, 0);
+            // ghostObj.transform.SetPositionAndRotation(spawnLocation.position, spawnLocation.rotation);
+            var ghostObj = PhotonNetwork.Instantiate("Ghost", spawnLocation.position, spawnLocation.rotation, 0);
             for (int i = 0; i < actions.Count; i++)
             {
                 var action = actions[i];

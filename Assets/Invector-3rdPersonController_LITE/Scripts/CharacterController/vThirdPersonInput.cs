@@ -80,7 +80,7 @@ namespace Invector.vCharacterController
             if (photonView.IsMine || !PhotonNetwork.IsConnected)
             {
                 MoveInput();
-                SprintInput();
+                // SprintInput();
                 StrafeInput();
                 JumpInput();
             }
