@@ -15,7 +15,7 @@ namespace GandyLabs.TimeLoop
                 PlayerController.LocalPlayerInstance = gameObject;
 
             spawnLocation = GameManager.Instance.spawnLocations.Dequeue();
-
+            
             DontDestroyOnLoad(gameObject);
         }
 

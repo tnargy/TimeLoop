@@ -2,7 +2,6 @@
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,6 +30,7 @@ namespace GandyLabs.TimeLoop
                 {
                     Debug.Log($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
                     var spawn = spawnLocations.Peek();
+                    var player =
                     // PhotonNetwork.Instantiate(playerPrefab.name, spawn.position, spawn.rotation, 0);
                     Instantiate(playerPrefab, spawn.position, spawn.rotation);
                 }
@@ -89,18 +89,28 @@ namespace GandyLabs.TimeLoop
         /// <param name="net">Name of gameobject Net or Net(1)</param>
         public void Score(Transform net)
         {
-            var players = GameObject.FindGameObjectsWithTag("Player");
-            float player0Distance = Vector3.Distance(
-                players[0].GetComponent<PlayerController>().spawnLocation.position,
-                net.position);
-            float player1Distance = Vector3.Distance(
-                players[1].GetComponent<PlayerController>().spawnLocation.position,
-                net.position);
-
-            if (player0Distance > player1Distance)
-                Debug.Log("First Player Wins!");
-            else
-                Debug.Log("Second Player Wins!");
+            if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnected)
+            {
+                int winnerIndex = 0;
+                float distance = 0;
+                var players = GameObject.FindGameObjectsWithTag("Player");
+                for (int i = 0; i < players.Length; i++)
+                {
+                    float playerDistance = Vector3.Distance(
+                                    players[i].GetComponent<PlayerController>().spawnLocation.position,
+                                    net.position);
+                    if (playerDistance > distance)
+                    {
+                        distance = playerDistance;
+                        winnerIndex = i;
+                    }
+                }
+                
+                if (PhotonNetwork.IsConnected)
+                    RPC_GameOver($"{players[winnerIndex].GetComponent<PhotonView>().Owner.NickName} Wins!");
+                else
+                    GameOver("You Win!");
+            }
         }
 
         [PunRPC]
@@ -118,9 +128,9 @@ namespace GandyLabs.TimeLoop
             StartCoroutine(End(5f));
         }
 
-        public void RPC_GameOver()
+        public void RPC_GameOver(string msg)
         {
-            photonView.RPC("GameOver", RpcTarget.OthersBuffered, "You Lose");
+            photonView.RPC("GameOver", RpcTarget.OthersBuffered, msg);
         }
 
         #endregion
