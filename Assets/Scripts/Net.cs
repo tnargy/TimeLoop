@@ -9,7 +9,7 @@ public class Net : MonoBehaviourPun
         if (other.CompareTag("Ball"))
         {
             Debug.Log("Score!");
-            GameManager.Instance.Score(name);
+            GameManager.Instance.Score(transform);
         }
     }
 }

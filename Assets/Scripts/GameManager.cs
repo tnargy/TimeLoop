@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,10 +30,9 @@ namespace GandyLabs.TimeLoop
                 if (PlayerController.LocalPlayerInstance == null)
                 {
                     Debug.Log($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
-                    // var player = PhotonNetwork.Instantiate(playerPrefab.name, spawnLocations.Peek().position, spawnLocations.Peek().rotation, 0);
-                    var player = Instantiate(playerPrefab, spawnLocations.Peek().position, spawnLocations.Peek().rotation);
-
-                    playerList.Add(player);
+                    var spawn = spawnLocations.Peek();
+                    // PhotonNetwork.Instantiate(playerPrefab.name, spawn.position, spawn.rotation, 0);
+                    Instantiate(playerPrefab, spawn.position, spawn.rotation);
                 }
                 else
                     Debug.Log($"Ignoring scene load for {SceneManagerHelper.ActiveSceneName}");
@@ -77,7 +77,7 @@ namespace GandyLabs.TimeLoop
         [Tooltip("The prefab to use for representing the player")]
         public GameObject playerPrefab;
         public Queue<Transform> spawnLocations;
-
+        
         public void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
@@ -87,12 +87,20 @@ namespace GandyLabs.TimeLoop
         /// When ball enters net, score is called
         /// </summary>
         /// <param name="net">Name of gameobject Net or Net(1)</param>
-        public void Score(string net)
+        public void Score(Transform net)
         {
-            foreach (var player in playerList)
-            {
-                
-            }
+            var players = GameObject.FindGameObjectsWithTag("Player");
+            float player0Distance = Vector3.Distance(
+                players[0].GetComponent<PlayerController>().spawnLocation.position,
+                net.position);
+            float player1Distance = Vector3.Distance(
+                players[1].GetComponent<PlayerController>().spawnLocation.position,
+                net.position);
+
+            if (player0Distance > player1Distance)
+                Debug.Log("First Player Wins!");
+            else
+                Debug.Log("Second Player Wins!");
         }
 
         [PunRPC]
@@ -119,7 +127,6 @@ namespace GandyLabs.TimeLoop
 
         #region Private Methods
 
-        private List<GameObject> playerList;
         private TextMeshProUGUI Announcement;
 
         IEnumerator End(float seconds)

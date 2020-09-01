@@ -8,7 +8,6 @@ namespace GandyLabs.TimeLoop
         public static GameObject LocalPlayerInstance;
         public Machine closeMachine;
         public Transform spawnLocation;
-        public string myNet;
 
         private void Awake()
         {
@@ -16,7 +15,6 @@ namespace GandyLabs.TimeLoop
                 PlayerController.LocalPlayerInstance = gameObject;
 
             spawnLocation = GameManager.Instance.spawnLocations.Dequeue();
-            myNet = spawnLocation.name;
 
             DontDestroyOnLoad(gameObject);
         }
